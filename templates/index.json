@@ -46,7 +46,7 @@
       "settings": {
         "image": "shopify://shop_images/grain_Texture.png",
         "image_overlay_opacity": 0,
-        "image_height": "medium",
+        "image_height": "large",
         "image_behavior": "none",
         "desktop_content_position": "middle-left",
         "desktop_content_alignment": "left",
@@ -56,6 +56,10 @@
         "mobile_content_alignment": "left",
         "show_text_below": false,
         "show_showcase_cards": true,
+        "showcase_image_1": "shopify://shop_images/Rectangle12.png",
+        "showcase_link_1": "",
+        "showcase_image_2": "shopify://shop_images/Rectangle_13_1.png",
+        "showcase_link_2": "",
         "show_slider_arrows": true
       }
     },
