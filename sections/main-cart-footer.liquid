@@ -58,9 +58,31 @@
                   {%- endif -%}
                 </div>
 
-                <div class="totals">
-                  <h2 class="totals__total">{{ 'sections.cart.estimated_total' | t }}</h2>
+                <div class="cart__order-summary-header">
+                  <h2 class="cart__order-summary-title">ORDER SUMMARY</h2>
+                </div>
+
+                <div class="cart__summary-lines">
+                  <div class="cart__summary-row">
+                    <span>Subtotal</span>
+                    <span class="cart__summary-value">{{ cart.items_subtotal_price | money }}</span>
+                  </div>
+                  <div class="cart__summary-row">
+                    <span>Shipping</span>
+                    <span class="cart__summary-value">Calculated at next step</span>
+                  </div>
+                </div>
+
+                <div class="totals cart__summary-total-row">
+                  <h2 class="totals__total">TOTAL (TAX INCL.)</h2>
                   <p class="totals__total-value">{{ cart.total_price | money_with_currency }}</p>
+                </div>
+
+                <div class="cart__terms-and-conditions">
+                  <label class="cart__terms-label">
+                    <input type="checkbox" id="CartTermsConditions" required checked>
+                    <span>I agree to the Terms and Conditions</span>
+                  </label>
                 </div>
 
                 <small class="tax-note caption-large rte">

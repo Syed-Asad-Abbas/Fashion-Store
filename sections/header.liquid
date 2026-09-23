@@ -205,7 +205,11 @@
             }}
           </div>
         {%- else -%}
-          <span class="h2">{{ shop.name }}</span>
+          <svg class="header__heading-logo brand-monogram-diamond" width="34" height="34" viewBox="0 0 118 117" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="{{ shop.name }}">
+            <path d="M58.5 0.603527L0.603527 58.5L58.5 116.396V0.603527Z" fill="#D9D8D3" stroke="#121212" stroke-width="0.5"/>
+            <path d="M58.5 0.603527L116.396 58.5L58.5 116.396V0.603527Z" fill="#121212" stroke="#121212" stroke-width="0.5"/>
+          </svg>
+          <span class="visually-hidden">{{ shop.name }}</span>
         {%- endif -%}
       </a>
       {%- if request.page_type == 'index' -%}
@@ -248,7 +252,11 @@
             }}
           </div>
         {%- else -%}
-          <span class="h2">{{ shop.name }}</span>
+          <svg class="header__heading-logo brand-monogram-diamond" width="34" height="34" viewBox="0 0 118 117" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="{{ shop.name }}">
+            <path d="M58.5 0.603527L0.603527 58.5L58.5 116.396V0.603527Z" fill="#D9D8D3" stroke="#121212" stroke-width="0.5"/>
+            <path d="M58.5 0.603527L116.396 58.5L58.5 116.396V0.603527Z" fill="#121212" stroke="#121212" stroke-width="0.5"/>
+          </svg>
+          <span class="visually-hidden">{{ shop.name }}</span>
         {%- endif -%}
       </a>
       {%- if request.page_type == 'index' -%}
@@ -299,24 +307,58 @@
         {%- endcase -%}
       {%- endfor -%}
 
-      <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
-        {% if cart == empty %}
-          <span class="svg-wrapper">{{ 'icon-cart-empty.svg' | inline_asset_content }}</span>
-        {% else %}
-          <span class="svg-wrapper">{{ 'icon-cart.svg' | inline_asset_content }}</span>
-        {% endif %}
+      <a href="{{ routes.cart_url }}" class="header__icon header__icon--wishlist link focus-inset" aria-label="Wishlist">
+        <span class="header__icon-circle">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+        </span>
+      </a>
+
+      <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart-pill link focus-inset" id="cart-icon-bubble">
+        <span class="cart-pill-label">Cart</span>
+        <span class="cart-pill-icon-wrap">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span class="cart-pill-count" aria-hidden="true">{{ cart.item_count }}</span>
+        </span>
         <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
-        {%- if cart != empty -%}
-          <div class="cart-count-bubble">
-            {%- if cart.item_count < 100 -%}
-              <span aria-hidden="true">{{ cart.item_count }}</span>
-            {%- endif -%}
-            <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
-          </div>
-        {%- endif -%}
+      </a>
+
+      <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="header__icon header__icon--account-circle link focus-inset" aria-label="Account">
+        <span class="header__icon-circle">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </span>
       </a>
     </div>
   </header>
+
+  {%- if section.settings.show_sub_navigation -%}
+    <div class="header-subnav-container page-width">
+      <div class="header-subnav-categories">
+        <a href="{{ routes.collections_url }}/all?filter.v.category=men" class="subnav-link">MEN</a>
+        <a href="{{ routes.collections_url }}/all?filter.v.category=women" class="subnav-link">WOMEN</a>
+        <a href="{{ routes.collections_url }}/all?filter.v.category=kids" class="subnav-link">KIDS</a>
+      </div>
+      <div class="header-subnav-search">
+        <form action="{{ routes.search_url }}" method="get" role="search" class="subnav-search-form">
+          <span class="subnav-search-icon">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </span>
+          <input type="search" name="q" placeholder="Search" class="subnav-search-input" value="{{ search.terms | escape }}" autocomplete="off">
+        </form>
+      </div>
+    </div>
+  {%- endif -%}
 </{{ header_tag }}>
 
 {%- if settings.cart_type == 'notification' -%}
@@ -642,6 +684,12 @@
     {
       "type": "header",
       "content": "t:sections.all.spacing"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sub_navigation",
+      "default": true,
+      "label": "Show category sub-navigation (MEN, WOMEN, KIDS)"
     },
     {
       "type": "range",

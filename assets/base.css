@@ -3635,3 +3635,331 @@ details-disclosure > details {
     transform: translateX(100%) scaleX(0);
   }
 }
+
+/* ==========================================================================
+   XIV FASHION STORE DESIGN SYSTEM (2026)
+   ========================================================================== */
+
+/* Brand Typography & Monogram */
+h1, h2, h3, .h1, .h2, .h3, .banner__heading, .card__heading, .product__title {
+  font-family: 'Beatrice', 'Beatrice Headline', Georgia, serif !important;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.brand-monogram-diamond {
+  display: block;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.brand-monogram-diamond:hover {
+  transform: rotate(90deg);
+}
+
+/* Header Luxury Pill & Icon System */
+.header__icons {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.header__icon-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #111111;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.header__icon-circle:hover {
+  background: #2b2b2b;
+  transform: scale(1.06);
+}
+
+.header__icon--cart-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: #111111;
+  color: #ffffff;
+  border-radius: 28px;
+  padding: 0.4rem 0.6rem 0.4rem 1.4rem;
+  font-family: var(--font-body-family);
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.header__icon--cart-pill:hover {
+  background: #2b2b2b;
+  transform: scale(1.03);
+}
+
+.cart-pill-icon-wrap {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.cart-pill-count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #ffffff;
+  color: #111111;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 50%;
+  min-width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2px;
+}
+
+/* Sub-navigation Row (MEN, WOMEN, KIDS & Subtle Search) */
+.header-subnav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem 2.4rem 1.4rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.header-subnav-categories {
+  display: flex;
+  align-items: center;
+  gap: 2.4rem;
+}
+
+.subnav-link {
+  font-family: var(--font-body-family);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #111111;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: opacity 0.2s ease;
+}
+
+.subnav-link:hover {
+  opacity: 0.55;
+}
+
+.header-subnav-search {
+  max-width: 340px;
+  width: 100%;
+}
+
+.subnav-search-form {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.subnav-search-icon {
+  position: absolute;
+  left: 1.2rem;
+  pointer-events: none;
+  opacity: 0.5;
+  display: flex;
+  align-items: center;
+}
+
+.subnav-search-input {
+  width: 100%;
+  padding: 0.75rem 1.2rem 0.75rem 3.4rem;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  font-family: var(--font-body-family);
+  font-size: 1.3rem;
+  color: #111111;
+  border-radius: 0 !important;
+  outline: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.subnav-search-input:focus {
+  background: #ffffff;
+  border-color: #111111;
+}
+
+/* Category Filter Chips */
+.collection-filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-bottom: 2rem;
+}
+
+.filter-chip {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  border: 1px solid #111111;
+  background: transparent;
+  color: #111111;
+  font-family: var(--font-body-family);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.filter-chip:hover,
+.filter-chip.active {
+  background: #111111;
+  color: #ffffff;
+}
+
+/* Square Variant Pills Matching Figma (XS, S, M, L, XL, 2X) */
+.product-form__input input[type='radio'] + label {
+  border: 1px solid #111111 !important;
+  border-radius: 0 !important;
+  min-width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem;
+  font-family: var(--font-body-family);
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  background: transparent;
+  color: #111111;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.product-form__input input[type='radio']:checked + label {
+  background: #111111 !important;
+  color: #ffffff !important;
+}
+
+/* Editorial Product Card System */
+.card-wrapper {
+  background: transparent !important;
+}
+
+.card--standard .card__inner {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 0 !important;
+  overflow: hidden;
+}
+
+.card__information {
+  padding: 1.2rem 0 !important;
+}
+
+.card__subheading {
+  font-family: var(--font-body-family);
+  font-size: 1.15rem;
+  color: rgba(0, 0, 0, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card__color-count {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.5);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.card__heading {
+  font-family: 'Beatrice', serif !important;
+  font-size: 1.5rem !important;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.4rem !important;
+}
+
+.price {
+  font-family: var(--font-body-family);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #111111;
+}
+
+/* Sharp Luxury Buttons */
+.button, .shopify-payment-button__button {
+  border-radius: 0 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: var(--font-body-family);
+  font-weight: 600;
+}
+
+.button--primary {
+  background: #111111 !important;
+  color: #ffffff !important;
+  border: 1px solid #111111 !important;
+}
+
+.button--primary:hover {
+  background: #2b2b2b !important;
+}
+
+.button--secondary {
+  background: transparent !important;
+  color: #111111 !important;
+  border: 1px solid #111111 !important;
+}
+
+.button--secondary:hover {
+  background: #111111 !important;
+  color: #ffffff !important;
+}
+
+/* Footer XIV QR & Minimalist Styling */
+.footer {
+  background: #edece8 !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.footer__brand-tech {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.footer__brand-title {
+  font-family: 'Beatrice', serif;
+  font-size: 3.6rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  color: #111111;
+}
+
+.footer__brand-sub {
+  font-family: var(--font-body-family);
+  font-size: 1.2rem;
+  color: rgba(0, 0, 0, 0.6);
+  letter-spacing: 0.06em;
+  margin-top: 0.5rem;
+}

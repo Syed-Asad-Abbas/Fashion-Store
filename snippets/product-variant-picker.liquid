@@ -58,6 +58,11 @@
             block: block,
             picker_type: picker_type
           %}
+          {%- if option.name == 'Size' -%}
+            <div class="product__size-guide-link">
+              <a href="#size-guide" class="link">FIND YOUR SIZE &nbsp;|&nbsp; MEASUREMENT GUIDE</a>
+            </div>
+          {%- endif -%}
         </fieldset>
       {%- else -%}
         <div class="product-form__input product-form__input--dropdown">

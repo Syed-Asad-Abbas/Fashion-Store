@@ -12,10 +12,25 @@
 <div class="collection-hero{% if section.settings.show_collection_image and collection.image %} collection-hero--with-image{% endif %} color-{{ section.settings.color_scheme }} gradient">
   <div class="collection-hero__inner page-width {% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
     <div class="collection-hero__text-wrapper">
+      <nav class="breadcrumb" role="navigation" aria-label="breadcrumbs">
+        <a href="{{ routes.root_url }}" title="Home">Home</a>
+        <span aria-hidden="true" class="breadcrumb-separator">/</span>
+        <span>{{ collection.title | escape }}</span>
+      </nav>
       <h1 class="collection-hero__title">
-        <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
         {{- collection.title | escape -}}
       </h1>
+
+      <div class="collection-filter-chips">
+        <a href="{{ collection.url }}" class="filter-chip active">NEW</a>
+        <a href="{{ collection.url }}?sort_by=best-selling" class="filter-chip">BEST SELLERS</a>
+        <a href="{{ routes.collections_url }}/shirts" class="filter-chip">SHIRTS</a>
+        <a href="{{ routes.collections_url }}/t-shirts" class="filter-chip">T-SHIRTS</a>
+        <a href="{{ routes.collections_url }}/polo-shirts" class="filter-chip">POLO SHIRTS</a>
+        <a href="{{ routes.collections_url }}/jeans" class="filter-chip">JEANS</a>
+        <a href="{{ routes.collections_url }}/shorts" class="filter-chip">SHORTS</a>
+        <a href="{{ routes.collections_url }}/jackets" class="filter-chip">JACKETS</a>
+      </div>
 
       {%- if section.settings.show_collection_description -%}
         <div class="collection-hero__description rte">{{ collection.description }}</div>

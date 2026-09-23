@@ -147,6 +147,16 @@
         </div>
         <div class="card__content">
           <div class="card__information">
+            <div class="card__subheading">
+              <span class="card__type-label">{{ card_product.type | default: 'Cotton T Shirt' }}</span>
+              {%- assign color_option = card_product.options_by_name['Color'] -%}
+              {%- if color_option and color_option.values.size > 1 -%}
+                <span class="card__color-count">
+                  <span class="card__color-swatch-box" style="background-color: #121212; width: 8px; height: 8px; display: inline-block; margin-right: 2px;"></span>
+                  +{{ color_option.values.size }}
+                </span>
+              {%- endif -%}
+            </div>
             <h3
               class="card__heading{% if card_product.featured_media or settings.card_style == 'standard' %} h5{% endif %}"
               {% if card_product.featured_media or settings.card_style == 'card' %}
