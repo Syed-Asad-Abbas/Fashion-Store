@@ -51,142 +51,122 @@
   endif
 -%}
 
+<!-- ============================================================
+     HERO SECTION — Figma-accurate 2-column layout
+     Left  : Category links → Search → Headline → CTA + arrows
+     Right : Two showcase product cards
+     ============================================================ -->
 <div
   id="Banner-{{ section.id }}"
-  class="banner banner--content-align-{{ section.settings.desktop_content_alignment }} banner--content-align-mobile-{{ section.settings.mobile_content_alignment }} banner--{{ section.settings.image_height }}{% if section.settings.stack_images_on_mobile and section.settings.image != blank and section.settings.image_2 != blank %} banner--stacked{% endif %}{% if section.settings.image_height == 'adapt' and section.settings.image != blank %} banner--adapt{% endif %}{% if section.settings.show_text_below %} banner--mobile-bottom{%- endif -%}{% if section.settings.show_text_box == false %} banner--desktop-transparent{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+  class="banner{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
 >
+  {%- comment -%} Background image (full-bleed behind the hero) {%- endcomment -%}
   {%- if section.settings.image != blank -%}
-    <div class="banner__media media{% if section.settings.image == blank and section.settings.image_2 == blank %} placeholder{% endif %}{% if section.settings.image_2 != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-      {%- liquid
-        assign image_height = section.settings.image.width | divided_by: section.settings.image.aspect_ratio
-        if section.settings.image_2 != blank
-          assign image_class = 'banner__media-image-half'
-        endif
-        if section.settings.image_2 != blank and section.settings.stack_images_on_mobile
-          assign sizes = stacked_sizes
-        elsif section.settings.image_2 != blank
-          assign sizes = half_width
-        else
-          assign sizes = full_width
-        endif
-      -%}
+    <div class="banner__bg-media">
       {{
         section.settings.image
         | image_url: width: 3840
         | image_tag:
-          width: section.settings.image.width,
-          height: image_height,
-          class: image_class,
-          sizes: sizes,
-          widths: widths,
-          fetchpriority: fetch_priority
-      }}
-    </div>
-  {%- elsif section.settings.image_2 == blank -%}
-    <div class="banner__media media{% if section.settings.image == blank and section.settings.image_2 == blank %} placeholder{% endif %}{% if section.settings.image_2 != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-      {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
-    </div>
-  {%- endif -%}
-  {%- if section.settings.image_2 != blank -%}
-    <div class="banner__media media{% if section.settings.image != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-      {%- liquid
-        assign image_height_2 = section.settings.image_2.width | divided_by: section.settings.image_2.aspect_ratio
-        if section.settings.image != blank
-          assign image_class_2 = 'banner__media-image-half'
-        endif
-        if section.settings.image != blank and section.settings.stack_images_on_mobile
-          assign sizes = stacked_sizes
-        elsif section.settings.image_2 != blank
-          assign sizes = half_width
-        else
-          assign sizes = full_width
-        endif
-      -%}
-      {{
-        section.settings.image_2
-        | image_url: width: 3840
-        | image_tag:
-          width: section.settings.image_2.width,
-          height: image_height_2,
-          class: image_class_2,
-          sizes: sizes,
+          class: 'banner__bg-img',
+          sizes: '100vw',
           widths: widths,
           fetchpriority: fetch_priority
       }}
     </div>
   {%- endif -%}
-  <div class="banner__content banner__content--{{ section.settings.desktop_content_position }} page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-    <div class="banner__box content-container content-container--full-width-mobile color-{{ section.settings.color_scheme }} gradient">
-      {%- for block in section.blocks -%}
-        {%- case block.type -%}
-          {%- when 'heading' -%}
-            <h2
-              class="banner__heading inline-richtext {{ block.settings.heading_size }}"
-              {{ block.shopify_attributes }}
-            >
-              {{ block.settings.heading }}
-            </h2>
-          {%- when 'text' -%}
-            <div class="banner__text rte {{ block.settings.text_style }}" {{ block.shopify_attributes }}>
-              <p>{{ block.settings.text }}</p>
-            </div>
-          {%- when 'buttons' -%}
-            <div
-              class="banner__buttons{% if block.settings.button_label_1 != blank and block.settings.button_label_2 != blank %} banner__buttons--multiple{% endif %}"
-              {{ block.shopify_attributes }}
-            >
-              {%- if block.settings.button_label_1 != blank -%}
-                <a
-                  {% if block.settings.button_link_1 == blank %}
-                    role="link" aria-disabled="true"
-                  {% else %}
-                    href="{{ block.settings.button_link_1 }}"
-                  {% endif %}
-                  class="button{% if block.settings.button_style_secondary_1 %} button--secondary{% else %} button--primary{% endif %}"
-                >
-                  {{- block.settings.button_label_1 | escape -}}
-                </a>
-              {%- endif -%}
-              {%- if block.settings.button_label_2 != blank -%}
-                <a
-                  {% if block.settings.button_link_2 == blank %}
-                    role="link" aria-disabled="true"
-                  {% else %}
-                    href="{{ block.settings.button_link_2 }}"
-                  {% endif %}
-                  class="button{% if block.settings.button_style_secondary_2 %} button--secondary{% else %} button--primary{% endif %}"
-                >
-                  {{- block.settings.button_label_2 | escape -}}
-                </a>
-              {%- endif -%}
-              {%- if section.settings.show_slider_arrows -%}
-                <div class="banner__slider-controls">
-                  <button type="button" class="banner__slider-arrow banner__slider-arrow--prev" aria-label="Previous Slide">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                  </button>
-                  <button type="button" class="banner__slider-arrow banner__slider-arrow--next" aria-label="Next Slide">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                  </button>
-                </div>
-              {%- endif -%}
-            </div>
-        {%- endcase -%}
-      {%- endfor -%}
+
+  <div class="hero-container page-width">
+    <!-- =================== LEFT COLUMN =================== -->
+    <div class="hero-left">
+
+      {%- comment -%} Vertical category links (MEN / WOMEN / KIDS) — from Figma {%- endcomment -%}
+      <nav class="hero-categories" aria-label="Shop by category">
+        <a href="{{ routes.collections_url }}/all?filter.v.category=men" class="hero-category-link">MEN</a>
+        <a href="{{ routes.collections_url }}/all?filter.v.category=women" class="hero-category-link">WOMEN</a>
+        <a href="{{ routes.collections_url }}/all?filter.v.category=kids" class="hero-category-link">KIDS</a>
+      </nav>
+
+      {%- comment -%} Search bar — Figma: 367×50, bg #D9D9D9, border-radius 2px {%- endcomment -%}
+      <form action="{{ routes.search_url }}" method="get" role="search" class="hero-search-form">
+        <span class="hero-search-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </span>
+        <input type="search" name="q" placeholder="Search" class="hero-search-input" value="{{ search.terms | escape }}" autocomplete="off">
+      </form>
+
+      {%- comment -%} Headline + subtitle — rendered from section blocks {%- endcomment -%}
+      <div class="hero-text-group">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'heading' -%}
+              <h2 class="hero-heading" {{ block.shopify_attributes }}>
+                {{ block.settings.heading }}
+              </h2>
+            {%- when 'text' -%}
+              <div class="hero-subtitle" {{ block.shopify_attributes }}>
+                <p>{{ block.settings.text }}</p>
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+
+      {%- comment -%} CTA row: Go To Shop button + slider arrows {%- endcomment -%}
+      <div class="hero-cta-row">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'buttons' -%}
+            {%- if block.settings.button_label_1 != blank -%}
+              <a
+                {% if block.settings.button_link_1 == blank %}
+                  role="link" aria-disabled="true"
+                {% else %}
+                  href="{{ block.settings.button_link_1 }}"
+                {% endif %}
+                class="hero-cta-button"
+                {{ block.shopify_attributes }}
+              >
+                <span class="hero-cta-label">{{ block.settings.button_label_1 | escape }}</span>
+                <span class="hero-cta-arrow">
+                  <svg width="60" height="12" viewBox="0 0 60 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="0" y1="6" x2="55" y2="6" stroke="#000" stroke-width="1.2"/>
+                    <polyline points="50,1 56,6 50,11" fill="none" stroke="#000" stroke-width="1.2"/>
+                  </svg>
+                </span>
+              </a>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- if section.settings.show_slider_arrows -%}
+          <div class="hero-slider-controls">
+            <button type="button" class="hero-slider-arrow hero-slider-arrow--prev" aria-label="Previous Slide">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <button type="button" class="hero-slider-arrow hero-slider-arrow--next" aria-label="Next Slide">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+          </div>
+        {%- endif -%}
+      </div>
     </div>
+
+    <!-- =================== RIGHT COLUMN =================== -->
     {%- if section.settings.show_showcase_cards -%}
-      <div class="banner__showcase-cards">
-        <a href="{{ section.settings.showcase_link_1 | default: routes.all_products_collection_url }}" class="banner__showcase-card" aria-label="Showcase 1">
+      <div class="hero-right">
+        <a href="{{ section.settings.showcase_link_1 | default: routes.all_products_collection_url }}" class="hero-showcase-card" aria-label="Showcase 1">
           {%- if section.settings.showcase_image_1 != blank -%}
-            {{ section.settings.showcase_image_1 | image_url: width: 800 | image_tag: loading: 'eager', class: 'banner__showcase-img' }}
+            {{ section.settings.showcase_image_1 | image_url: width: 800 | image_tag: loading: 'eager', class: 'hero-showcase-img' }}
           {%- else -%}
-            <img src="{{ 'Rectangle-12.png' | asset_url }}" alt="Showcase Look 1" class="banner__showcase-img" loading="eager" width="366" height="376">
+            <img src="{{ 'Rectangle-12.png' | asset_url }}" alt="Showcase Look 1" class="hero-showcase-img" loading="eager" width="366" height="376">
           {%- endif -%}
         </a>
-        <a href="{{ section.settings.showcase_link_2 | default: routes.all_products_collection_url }}" class="banner__showcase-card" aria-label="Showcase 2">
+        <a href="{{ section.settings.showcase_link_2 | default: routes.all_products_collection_url }}" class="hero-showcase-card" aria-label="Showcase 2">
           {%- if section.settings.showcase_image_2 != blank -%}
-            {{ section.settings.showcase_image_2 | image_url: width: 800 | image_tag: loading: 'eager', class: 'banner__showcase-img' }}
+            {{ section.settings.showcase_image_2 | image_url: width: 800 | image_tag: loading: 'eager', class: 'hero-showcase-img' }}
           {%- else -%}
-            <img src="{{ 'Rectangle-13.png' | asset_url }}" alt="Showcase Look 2" class="banner__showcase-img" loading="eager" width="366" height="376">
+            <img src="{{ 'Rectangle-13.png' | asset_url }}" alt="Showcase Look 2" class="hero-showcase-img" loading="eager" width="366" height="376">
           {%- endif -%}
         </a>
       </div>
@@ -197,7 +177,7 @@
 <script>
   /**
    * Goal: Scroll the hero showcase cards horizontally when the user clicks slider arrow buttons.
-   * Method: Calculates scroll offset and smoothly scrolls the .banner__showcase-cards container.
+   * Method: Calculates scroll offset and smoothly scrolls the .hero-right container.
    * Inputs/Outputs: Accepts container (HTMLElement) and direction ('prev' | 'next'), returns void.
    */
   function scrollHeroShowcase(container, direction) {
@@ -208,14 +188,14 @@
 
   /**
    * Goal: Attach event listeners to hero slider arrow buttons.
-   * Method: Queries .banner__slider-arrow buttons and registers click handlers delegating to scrollHeroShowcase.
+   * Method: Queries .hero-slider-arrow buttons and registers click handlers delegating to scrollHeroShowcase.
    * Inputs/Outputs: Accepts rootElement (HTMLElement), returns void.
    */
   function initHeroSlider(rootElement) {
     if (!rootElement) return;
-    const prevBtn = rootElement.querySelector('.banner__slider-arrow--prev');
-    const nextBtn = rootElement.querySelector('.banner__slider-arrow--next');
-    const cardsContainer = rootElement.querySelector('.banner__showcase-cards');
+    const prevBtn = rootElement.querySelector('.hero-slider-arrow--prev');
+    const nextBtn = rootElement.querySelector('.hero-slider-arrow--next');
+    const cardsContainer = rootElement.querySelector('.hero-right');
 
     if (prevBtn && cardsContainer) {
       prevBtn.addEventListener('click', function() {

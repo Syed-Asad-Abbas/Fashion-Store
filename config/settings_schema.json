@@ -8,6 +8,17 @@
     "theme_support_url": "https://support.shopify.com/"
   },
   {
+    "name": "Custom UI Elements",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "ui_elements_bg",
+        "label": "Search, Button & Footer Background",
+        "info": "This image will be used as the background for the search bar, 'Go To Shop' button, and footer."
+      }
+    ]
+  },
+  {
     "name": "t:settings_schema.logo.name",
     "settings": [
       {

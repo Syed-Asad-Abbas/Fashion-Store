@@ -1,3 +1,7 @@
+/* ==========================================================================
+   Dawn Default Banner Styles (preserved for backward compatibility)
+   ========================================================================== */
+
 .banner {
   display: flex;
   position: relative;
@@ -6,385 +10,7 @@
   isolation: isolate;
 }
 
-.banner__box {
-  text-align: center;
-}
-
-/* Needed for gradient continuity with or without animation, the transform scopes the gradient to its container which happens already when animation are turned on */
-.banner__box.gradient {
-  transform: perspective(0);
-}
-
-@media only screen and (max-width: 749px) {
-  .banner--content-align-mobile-right .banner__box {
-    text-align: right;
-  }
-
-  .banner--content-align-mobile-left .banner__box {
-    text-align: left;
-  }
-}
-
-@media only screen and (min-width: 750px) {
-  .banner--content-align-right .banner__box {
-    text-align: right;
-  }
-
-  .banner--content-align-left .banner__box {
-    text-align: left;
-  }
-
-  .banner--content-align-left.banner--desktop-transparent .banner__box,
-  .banner--content-align-right.banner--desktop-transparent .banner__box,
-  .banner--medium.banner--desktop-transparent .banner__box {
-    max-width: 68rem;
-  }
-}
-
-.banner__media.animate--zoom-in {
-  clip-path: inset(0px);
-}
-
-.banner__media.animate--zoom-in > img:not(.zoom):not(.deferred-media__poster-button),
-.banner__media.animate--zoom-in > svg:not(.zoom):not(.deferred-media__poster-button) {
-  position: fixed;
-  height: 100vh;
-}
-
-@media screen and (max-width: 749px) {
-  .banner--small.banner--mobile-bottom:not(.banner--adapt) .banner__media,
-  .banner--small.banner--stacked:not(.banner--mobile-bottom):not(.banner--adapt) > .banner__media {
-    height: 28rem;
-  }
-
-  .banner--medium.banner--mobile-bottom:not(.banner--adapt) .banner__media,
-  .banner--medium.banner--stacked:not(.banner--mobile-bottom):not(.banner--adapt) > .banner__media {
-    height: 34rem;
-  }
-
-  .banner--large.banner--mobile-bottom:not(.banner--adapt) .banner__media,
-  .banner--large.banner--stacked:not(.banner--mobile-bottom):not(.banner--adapt) > .banner__media {
-    height: 39rem;
-  }
-
-  .banner--small:not(.banner--mobile-bottom):not(.banner--adapt) .banner__content {
-    min-height: 28rem;
-  }
-
-  .banner--medium:not(.banner--mobile-bottom):not(.banner--adapt) .banner__content {
-    min-height: 34rem;
-  }
-
-  .banner--large:not(.banner--mobile-bottom):not(.banner--adapt) .banner__content {
-    min-height: 39rem;
-  }
-}
-
-@media screen and (min-width: 750px) {
-  .banner {
-    flex-direction: row;
-  }
-
-  .banner--small:not(.banner--adapt) {
-    min-height: 42rem;
-  }
-
-  .banner--medium:not(.banner--adapt) {
-    min-height: 56rem;
-  }
-
-  .banner--large:not(.banner--adapt) {
-    min-height: 72rem;
-  }
-
-  .banner__content.banner__content--top-left {
-    align-items: flex-start;
-    justify-content: flex-start;
-  }
-
-  .banner__content.banner__content--top-center {
-    align-items: flex-start;
-    justify-content: center;
-  }
-
-  .banner__content.banner__content--top-right {
-    align-items: flex-start;
-    justify-content: flex-end;
-  }
-
-  .banner__content.banner__content--middle-left {
-    align-items: center;
-    justify-content: flex-start;
-  }
-
-  .banner__content.banner__content--middle-center {
-    align-items: center;
-    justify-content: center;
-  }
-
-  .banner__content.banner__content--middle-right {
-    align-items: center;
-    justify-content: flex-end;
-  }
-
-  .banner__content.banner__content--bottom-left {
-    align-items: flex-end;
-    justify-content: flex-start;
-  }
-
-  .banner__content.banner__content--bottom-center {
-    align-items: flex-end;
-    justify-content: center;
-  }
-
-  .banner__content.banner__content--bottom-right {
-    align-items: flex-end;
-    justify-content: flex-end;
-  }
-}
-
-@media screen and (max-width: 749px) {
-  .banner:not(.banner--stacked) {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  .banner--stacked {
-    height: auto;
-  }
-
-  .banner--stacked .banner__media {
-    flex-direction: column;
-  }
-}
-
-.banner__media {
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-}
-
-.banner__media-half {
-  width: 50%;
-}
-
-.banner__media-half + .banner__media-half {
-  right: 0;
-  left: auto;
-}
-
-.banner__media-half.animate--fixed:first-child > img,
-.banner__media-half.animate--zoom-in:first-child > img {
-  width: 50%;
-}
-
-.banner__media-half.animate--fixed:nth-child(2) > img,
-.banner__media-half.animate--zoom-in:nth-child(2) > img {
-  left: 50%;
-  width: 50%;
-}
-
-@media screen and (max-width: 749px) {
-  .banner--stacked .animate--fixed:first-child > img,
-  .banner--stacked .animate--zoom-in:first-child > img {
-    width: 100%;
-  }
-
-  .banner--stacked .banner__media-half.animate--fixed:nth-child(2) > img,
-  .banner--stacked .banner__media-half.animate--zoom-in:nth-child(2) > img {
-    left: 0;
-    width: 100%;
-  }
-
-  .banner--stacked .banner__media-half {
-    width: 100%;
-  }
-
-  .banner--stacked .banner__media-half + .banner__media-half {
-    order: 1;
-  }
-}
-
-@media screen and (min-width: 750px) {
-  .banner__media {
-    height: 100%;
-  }
-}
-
-.banner--adapt,
-.banner--adapt_image.banner--mobile-bottom .banner__media:not(.placeholder) {
-  height: auto;
-}
-
-@media screen and (max-width: 749px) {
-  .banner--mobile-bottom .banner__media,
-  .banner--stacked:not(.banner--mobile-bottom) .banner__media {
-    position: relative;
-  }
-
-  .banner--stacked.banner--adapt .banner__content {
-    height: auto;
-  }
-
-  .banner:not(.banner--mobile-bottom):not(.email-signup-banner) .banner__box {
-    background: transparent;
-  }
-
-  .banner:not(.banner--mobile-bottom) .banner__box {
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
-  }
-
-  .banner:not(.banner--mobile-bottom) .button--secondary {
-    --alpha-button-background: 0;
-  }
-
-  .banner--stacked:not(.banner--mobile-bottom):not(.banner--adapt) .banner__content {
-    position: absolute;
-    height: auto;
-  }
-
-  .banner--stacked.banner--adapt:not(.banner--mobile-bottom) .banner__content {
-    max-height: 100%;
-    overflow: hidden;
-    position: absolute;
-  }
-
-  .banner--stacked:not(.banner--adapt) .banner__media {
-    position: relative;
-  }
-
-  .banner::before {
-    display: none !important;
-  }
-
-  .banner--stacked .banner__media-image-half {
-    width: 100%;
-  }
-}
-
-.banner__content {
-  padding: 0;
-  display: flex;
-  position: relative;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  z-index: 2;
-}
-
-@media screen and (min-width: 750px) {
-  .banner__content {
-    padding: 5rem;
-  }
-
-  .banner__content--top-left {
-    align-items: flex-start;
-    justify-content: flex-start;
-  }
-
-  .banner__content--top-center {
-    align-items: flex-start;
-    justify-content: center;
-  }
-
-  .banner__content--top-right {
-    align-items: flex-start;
-    justify-content: flex-end;
-  }
-
-  .banner__content--middle-left {
-    align-items: center;
-    justify-content: flex-start;
-  }
-
-  .banner__content--middle-center {
-    align-items: center;
-    justify-content: center;
-  }
-
-  .banner__content--middle-right {
-    align-items: center;
-    justify-content: flex-end;
-  }
-
-  .banner__content--bottom-left {
-    align-items: flex-end;
-    justify-content: flex-start;
-  }
-
-  .banner__content--bottom-center {
-    align-items: flex-end;
-    justify-content: center;
-  }
-
-  .banner__content--bottom-right {
-    align-items: flex-end;
-    justify-content: flex-end;
-  }
-}
-
-@media screen and (max-width: 749px) {
-  .banner--mobile-bottom:not(.banner--stacked) .banner__content {
-    order: 2;
-  }
-
-  .banner:not(.banner--mobile-bottom) .field__input,
-  .banner--mobile-bottom:not(.banner--stacked) .banner__box.color-scheme-1 {
-    background: transparent;
-  }
-}
-
-.banner__box {
-  padding: 4rem 1.5rem;
-  position: relative;
-  height: fit-content;
-  align-items: center;
-  text-align: center;
-  width: 100%;
-  word-wrap: break-word;
-  z-index: 1;
-}
-
-.banner--mobile-bottom .banner__box {
-  padding: 4rem 3.5rem;
-}
-
-@media screen and (min-width: 750px) {
-  .banner__box {
-    padding: 4rem 3.5rem;
-  }
-
-  .banner--desktop-transparent .banner__box {
-    padding: 4rem 0;
-    background: transparent;
-    max-width: 89rem;
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
-  }
-
-  .banner--desktop-transparent .button--secondary {
-    --alpha-button-background: 0;
-  }
-
-  .banner--desktop-transparent .content-container:after {
-    display: none;
-  }
-}
-
-@media screen and (max-width: 749px) {
-  .banner--mobile-bottom::after,
-  .banner--mobile-bottom .banner__media::after {
-    display: none;
-  }
-}
-
-.banner::after,
-.banner__media::after {
+.banner::after {
   content: '';
   position: absolute;
   top: 0;
@@ -393,150 +19,134 @@
   z-index: 1;
   width: 100%;
   height: 100%;
-}
-
-.banner__box > * + .banner__text {
-  margin-top: 1.5rem;
-}
-
-@media screen and (min-width: 750px) {
-  .banner__box > * + .banner__text {
-    margin-top: 2rem;
-  }
-}
-
-.banner__box > * + * {
-  margin-top: 1rem;
-}
-
-.banner__box > *:first-child {
-  margin-top: 0;
-}
-
-@media screen and (max-width: 749px) {
-  .banner--stacked .banner__box {
-    width: 100%;
-  }
-}
-
-@media screen and (min-width: 750px) {
-  .banner__box {
-    width: auto;
-    max-width: 71rem;
-    min-width: 45rem;
-  }
-}
-
-@media screen and (min-width: 1400px) {
-  .banner__box {
-    max-width: 90rem;
-  }
-}
-
-.banner__heading {
-  margin-bottom: 0;
-}
-
-.banner__box .banner__heading + * {
-  margin-top: 1rem;
-}
-
-.banner__buttons {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  max-width: 45rem;
-  word-break: break-word;
-}
-
-@media screen and (max-width: 749px) {
-  .banner--content-align-mobile-right .banner__buttons--multiple {
-    justify-content: flex-end;
-  }
-
-  .banner--content-align-mobile-center .banner__buttons--multiple > * {
-    flex-grow: 1;
-    min-width: 22rem;
-  }
-}
-
-@media screen and (min-width: 750px) {
-  .banner--content-align-center .banner__buttons--multiple > * {
-    flex-grow: 1;
-    min-width: 22rem;
-  }
-
-  .banner--content-align-right .banner__buttons--multiple {
-    justify-content: flex-end;
-  }
-}
-
-.banner__box > * + .banner__buttons {
-  margin-top: 2rem;
-}
-
-@media screen and (max-width: 749px) {
-  .banner:not(.slideshow) .rte a,
-  .banner:not(.slideshow) .inline-richtext a:hover,
-  .banner:not(.slideshow) .rte a:hover {
-    color: currentColor;
-  }
-}
-
-@media screen and (min-width: 750px) {
-  .banner--desktop-transparent .rte a,
-  .banner--desktop-transparent .inline-richtext a:hover,
-  .banner--desktop-transparent .rte a:hover {
-    color: currentColor;
-  }
+  pointer-events: none;
 }
 
 /* ==========================================================================
-   FIGMA EXACT HERO SECTION SPECIFICATIONS (1280px x 832px)
+   HERO SECTION — Figma-Accurate 2-Column Layout
+   Background: #FFFFFF  |  Full-width, min-height ~700px on desktop
    ========================================================================== */
 
-/* Frame Container (Figma: width 1280px, min-height 832px, border 4px solid #000000, background #FFFFFF) */
-@media screen and (min-width: 1024px) {
-  .banner {
-    max-width: 1280px;
-    margin: 2.4rem auto;
-    border: 4px solid #000000;
-    min-height: 800px;
-    background: #FFFFFF;
-    position: relative;
-    overflow: hidden;
-  }
+/* Background media (full-bleed behind entire hero) */
+.banner__bg-media {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  display: none !important; /* Hidden per user request to make hero transparent */
 }
 
-.banner--desktop-transparent .banner__content {
+.banner__bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ---------- Hero Container (page-width grid wrapper) ---------- */
+.hero-container {
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  padding: 3rem 2rem;
-  width: 100%;
+  gap: 3rem;
+  padding: 2rem 0 4rem;
 }
 
 @media screen and (min-width: 990px) {
-  .banner--desktop-transparent .banner__content {
-    flex-direction: row;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 3rem;
-    padding: 4rem 5rem 6.4rem;
-    min-height: 750px;
+  .hero-container {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 6rem;
+    padding: 2rem 0 6rem;
+    min-height: 700px;
+    align-content: start;
   }
 }
 
-.banner__box {
-  max-width: 420px;
-  padding: 0 !important;
-  text-align: left;
-  background: transparent !important;
-  border: none !important;
+/* ---------- LEFT COLUMN ---------- */
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0;
 }
 
-/* Heading (Figma: NEW COLLECTION, Beatrice Deck Trial, 800, 48px, line-height 40px, letter-spacing 2px, uppercase) */
-.banner__heading {
+/* Category Links (Figma: MEN / WOMEN / KIDS — stacked, 16px/24px, 400, 2px spacing) */
+.hero-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 2.4rem;
+}
+
+.hero-category-link {
+  font-family: 'Beatrice Deck Trial', 'Beatrice', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 2px;
+  color: #000000;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.hero-category-link:hover {
+  opacity: 0.6;
+}
+
+/* Search Bar (Figma: 367×50, bg #D9D9D9, border-radius 2px) */
+.hero-search-form {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 367px;
+  height: 50px;
+  background: #D9D9D9;
+  border: none;
+  border-radius: 2px;
+  padding: 0 1.4rem;
+  margin-bottom: 6rem;
+  box-sizing: border-box;
+}
+
+.hero-search-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+  color: #000000;
+  flex-shrink: 0;
+}
+
+.hero-search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: 'Beatrice Deck Trial', 'Beatrice', sans-serif;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 1px;
+  color: #000000;
+  padding: 0;
+}
+
+.hero-search-input::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* Text Group */
+.hero-text-group {
+  margin-bottom: 4rem;
+}
+
+/* Heading (Figma: NEW COLLECTION — Beatrice Deck Trial, 800, 48px/40px, 2px spacing, uppercase) */
+.hero-heading {
   font-family: 'Beatrice Deck Trial', 'Beatrice', Georgia, serif !important;
   font-style: normal !important;
   font-weight: 800 !important;
@@ -548,67 +158,75 @@
   margin: 0 0 1.6rem 0 !important;
 }
 
-/* Subtitle (Figma: Summer 2026, Beatrice Deck Trial, 400, 16px, line-height 24px, letter-spacing 2px) */
-.banner__text.subtitle,
-.banner__text p {
-  font-family: 'Beatrice Deck Trial', 'Beatrice', sans-serif !important;
-  font-style: normal !important;
-  font-weight: 400 !important;
-  font-size: 16px !important;
-  line-height: 24px !important;
-  letter-spacing: 2px !important;
-  color: #000000 !important;
-  margin: 0 0 3.6rem 0 !important;
+/* Subtitle (Figma: Summer 2026 — Beatrice Deck Trial, 400, 16px/24px, 2px spacing) */
+.hero-subtitle,
+.hero-subtitle p {
+  font-family: 'Beatrice Deck Trial', 'Beatrice', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 2px;
+  color: #000000;
+  margin: 0;
 }
 
-/* CTA & Slider Navigation Row (Figma Group 39, 42, 43) */
-.banner__buttons {
-  display: flex !important;
-  align-items: center !important;
-  gap: 1.6rem !important;
-  flex-wrap: wrap !important;
-  margin: 0 !important;
+/* ---------- CTA Row (Button + Slider Arrows) ---------- */
+.hero-cta-row {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  flex-wrap: wrap;
 }
 
-/* Button (Figma Rectangle 11: width 265px, height 40px, background #D9D9D9, font 16px / 24px, 500) */
-.banner__buttons .button,
-.banner__buttons .button--primary {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: flex-start !important;
-  width: 265px !important;
-  max-width: 100% !important;
-  height: 40px !important;
-  min-height: 40px !important;
-  padding: 0 1.8rem !important;
-  background: #D9D9D9 !important;
-  color: #000000 !important;
-  border: none !important;
-  font-family: 'Beatrice Deck Trial', 'Beatrice', sans-serif !important;
-  font-style: normal !important;
-  font-weight: 500 !important;
-  font-size: 16px !important;
-  line-height: 24px !important;
-  letter-spacing: 0 !important;
-  text-transform: none !important;
-  border-radius: 0 !important;
+/* CTA Button (Figma Rectangle 11: 265×40, bg #D9D9D9, flat, no border) */
+.hero-cta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 265px;
+  max-width: 100%;
+  height: 40px;
+  padding: 0 1.8rem;
+  background: #D9D9D9;
+  color: #000000;
+  border: none;
+  font-family: 'Beatrice Deck Trial', 'Beatrice', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+  text-transform: none;
+  text-decoration: none;
+  border-radius: 0;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  box-sizing: border-box;
 }
 
-.banner__buttons .button:hover,
-.banner__buttons .button--primary:hover {
-  background: #c7c7c7 !important;
+.hero-cta-button:hover {
+  background: #c7c7c7;
 }
 
-/* Slider Arrow Controls (Figma Group 42 & 43: 40px x 40px, border 1px solid #A3A3A3) */
-.banner__slider-controls {
+.hero-cta-label {
+  white-space: nowrap;
+}
+
+.hero-cta-arrow {
+  display: flex;
+  align-items: center;
+  margin-left: 1rem;
+}
+
+/* Slider Arrow Controls (Figma Group 42 & 43: 40×40, border 1px solid #A3A3A3) */
+.hero-slider-controls {
   display: inline-flex;
   align-items: center;
   gap: 1.2rem;
 }
 
-.banner__slider-arrow {
+.hero-slider-arrow {
   width: 40px;
   height: 40px;
   display: flex;
@@ -622,19 +240,19 @@
   transition: background-color 0.2s ease, opacity 0.2s ease;
 }
 
-.banner__slider-arrow--prev {
+.hero-slider-arrow--prev {
   opacity: 0.66;
 }
 
-.banner__slider-arrow:hover {
+.hero-slider-arrow:hover {
   background: rgba(0, 0, 0, 0.05);
   opacity: 1;
 }
 
-/* Showcase Lookbook Cards (Figma Rectangle 12 & 13: 366px x 376px, border 1px solid #D7D7D7) */
-.banner__showcase-cards {
+/* ---------- RIGHT COLUMN — Showcase Cards ---------- */
+.hero-right {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 2.4rem;
   overflow-x: auto;
   scroll-behavior: smooth;
@@ -643,11 +261,19 @@
   padding: 0.5rem 0;
 }
 
-.banner__showcase-cards::-webkit-scrollbar {
+.hero-right::-webkit-scrollbar {
   display: none;
 }
 
-.banner__showcase-card {
+@media screen and (min-width: 990px) {
+  .hero-right {
+    align-self: start;
+    margin-top: 12rem;
+  }
+}
+
+/* Showcase Cards (Figma Rectangle 12 & 13: 366×376, border 1px solid #D7D7D7) */
+.hero-showcase-card {
   width: 366px;
   height: 376px;
   border: 1px solid #D7D7D7;
@@ -660,11 +286,11 @@
   transition: border-color 0.2s ease, transform 0.2s ease;
 }
 
-.banner__showcase-card:hover {
+.hero-showcase-card:hover {
   border-color: #000000;
 }
 
-.banner__showcase-img {
+.hero-showcase-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -672,19 +298,49 @@
   transition: transform 0.4s ease;
 }
 
-.banner__showcase-card:hover .banner__showcase-img {
+.hero-showcase-card:hover .hero-showcase-img {
   transform: scale(1.02);
 }
 
+/* ---------- RESPONSIVE — Mobile / Tablet ---------- */
 @media screen and (max-width: 989px) {
-  .banner__showcase-cards {
-    margin-top: 3rem;
+  .hero-container {
+    flex-direction: column;
+    padding: 2rem 1.5rem 3rem;
+  }
+
+  .hero-heading {
+    font-size: 36px !important;
+    line-height: 34px !important;
+  }
+
+  .hero-search-form {
+    max-width: 100%;
+  }
+
+  .hero-right {
     width: 100%;
   }
 
-  .banner__showcase-card {
+  .hero-showcase-card {
     width: 280px;
     height: 290px;
   }
+
+  .hero-cta-button {
+    width: 100%;
+    max-width: 265px;
+  }
 }
 
+@media screen and (max-width: 480px) {
+  .hero-heading {
+    font-size: 28px !important;
+    line-height: 28px !important;
+  }
+
+  .hero-showcase-card {
+    width: 240px;
+    height: 250px;
+  }
+}

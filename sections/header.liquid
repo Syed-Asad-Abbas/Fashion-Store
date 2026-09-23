@@ -167,18 +167,12 @@
   <header class="header header--{{ section.settings.logo_position }} header--mobile-{{ section.settings.mobile_logo_position }} page-width{% if section.settings.menu_type_desktop == 'drawer' %} drawer-menu{% endif %}{% if section.settings.menu != blank %} header--has-menu{% endif %}{% if has_app_block %} header--has-app{% endif %}{% if social_links %} header--has-social{% endif %}{% if shop.customer_accounts_enabled %} header--has-account{% endif %}{% if country_selector or language_selector %} header--has-localizations{% endif %}">
     {%- liquid
       assign render_search_left = false
-      if section.settings.logo_position == 'top-center' or section.settings.menu == blank or shop.customer_accounts_enabled
-        assign render_search_left = true
-      endif
 
       if section.settings.menu != blank
         render 'header-drawer', show_country_selector: country_selector, show_language_selector: language_selector, show_social_links: social_links
       endif
-
-      if render_search_left
-        render 'header-search', input_id: 'Search-In-Modal-1'
-      endif
     -%}
+    {% comment %} Search rendering disabled — search is inside the hero section per Figma {% endcomment %}
 
     {%- if section.settings.logo_position != 'middle-center' -%}
       {%- if request.page_type == 'index' -%}
@@ -288,17 +282,9 @@
           </localization-form>
         {%- endif -%}
       </div>
-      {% render 'header-search', input_id: 'Search-In-Modal' %}
+      {% comment %} Dawn search modal hidden — search lives inside the hero left column per Figma {% endcomment %}
 
-      {%- if shop.customer_accounts_enabled -%}
-        <shopify-account
-          menu="{{ settings.customer_account_menu | default: 'customer-account-main-menu' }}"
-          class="header__icon header__icon--account link focus-inset"
-        >
-          <span slot="signed-out-avatar" class="svg-wrapper">{{ 'icon-account.svg' | inline_asset_content }}</span>
-          <span slot="signed-out-avatar" class="visually-hidden">{{ 'customer.log_in' | t }}</span>
-        </shopify-account>
-      {%- endif -%}
+      {% comment %} Default shopify-account hidden — using custom account circle per Figma {% endcomment %}
 
       {%- for block in section.blocks -%}
         {%- case block.type -%}
@@ -339,26 +325,7 @@
     </div>
   </header>
 
-  {%- if section.settings.show_sub_navigation -%}
-    <div class="header-subnav-container page-width">
-      <div class="header-subnav-categories">
-        <a href="{{ routes.collections_url }}/all?filter.v.category=men" class="subnav-link">MEN</a>
-        <a href="{{ routes.collections_url }}/all?filter.v.category=women" class="subnav-link">WOMEN</a>
-        <a href="{{ routes.collections_url }}/all?filter.v.category=kids" class="subnav-link">KIDS</a>
-      </div>
-      <div class="header-subnav-search">
-        <form action="{{ routes.search_url }}" method="get" role="search" class="subnav-search-form">
-          <span class="subnav-search-icon">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-          </span>
-          <input type="search" name="q" placeholder="Search" class="subnav-search-input" value="{{ search.terms | escape }}" autocomplete="off">
-        </form>
-      </div>
-    </div>
-  {%- endif -%}
+  {% comment %} Sub-navigation (MEN/WOMEN/KIDS + search) removed from header — now rendered inside the hero section per Figma {% endcomment %}
 </{{ header_tag }}>
 
 {%- if settings.cart_type == 'notification' -%}

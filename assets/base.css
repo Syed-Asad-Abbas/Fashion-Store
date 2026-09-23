@@ -2846,12 +2846,11 @@ details[open] > .header__submenu {
 }
 
 .header__menu-item:hover span {
-  text-decoration: underline;
-  text-underline-offset: 0.3rem;
+  text-decoration: none;
 }
 
 details[open] > .header__menu-item {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 details[open]:hover > .header__menu-item {
@@ -2865,8 +2864,7 @@ details[open] > .header__menu-item .icon-caret {
 .header__active-menu-item {
   transition: text-decoration-thickness var(--duration-short) ease;
   color: rgb(var(--color-foreground));
-  text-decoration: underline;
-  text-underline-offset: 0.3rem;
+  text-decoration: none;
 }
 
 .header__menu-item:hover .header__active-menu-item {
@@ -3650,15 +3648,14 @@ h1, h2, h3, .h1, .h2, .h3, .banner__heading, .card__heading, .product__title {
 
 .brand-monogram-diamond {
   display: block;
-  width: 35.36px;
-  height: 35.36px;
+  width: 34px;
+  height: 34px;
   cursor: pointer;
-  transform: rotate(45deg);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .brand-monogram-diamond:hover {
-  transform: rotate(135deg);
+  transform: rotate(90deg);
 }
 
 /* Header Navigation Links (Figma Group 3: Home, Collections, New) */
@@ -3759,88 +3756,8 @@ h1, h2, h3, .h1, .h2, .h3, .banner__heading, .card__heading, .product__title {
   padding: 0 2px;
 }
 
-/* Sub-navigation Row (MEN, WOMEN, KIDS & Search) */
-.header-subnav-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.2rem 2.4rem 1.6rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-}
+/* Sub-navigation styles moved to section-image-banner.css (hero-categories, hero-search-form) */
 
-.header-subnav-categories {
-  display: flex;
-  align-items: center;
-  gap: 2.8rem;
-}
-
-.subnav-link {
-  font-family: 'Beatrice Deck Trial', 'Beatrice', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  letter-spacing: 2px;
-  color: #000000;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: opacity 0.2s ease;
-}
-
-.subnav-link:hover {
-  opacity: 0.6;
-}
-
-/* Figma Group 44: Search Input (width 367px, height 50px, background #D9D9D9, border-radius 2px) */
-.header-subnav-search {
-  max-width: 367px;
-  width: 100%;
-}
-
-.subnav-search-form {
-  position: relative;
-  display: flex;
-  align-items: center;
-  width: 100%;
-}
-
-.subnav-search-icon {
-  position: absolute;
-  left: 1.4rem;
-  pointer-events: none;
-  display: flex;
-  align-items: center;
-  color: rgba(0, 0, 0, 0.66);
-}
-
-.subnav-search-input {
-  width: 367px;
-  max-width: 100%;
-  height: 50px;
-  padding: 0 1.2rem 0 3.8rem;
-  background: #D9D9D9;
-  border: none;
-  border-radius: 2px !important;
-  font-family: 'Beatrice Deck Trial', 'Beatrice', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 18px;
-  letter-spacing: 2px;
-  color: rgba(0, 0, 0, 0.85);
-  outline: none;
-  transition: background-color 0.2s ease;
-}
-
-.subnav-search-input::placeholder {
-  color: rgba(0, 0, 0, 0.66);
-  font-family: 'Beatrice Deck Trial', 'Beatrice', sans-serif;
-  letter-spacing: 2px;
-}
-
-.subnav-search-input:focus {
-  background: #eaeaea;
-}
 
 /* Category Filter Chips */
 .collection-filter-chips {
@@ -3979,7 +3896,7 @@ h1, h2, h3, .h1, .h2, .h3, .banner__heading, .card__heading, .product__title {
 
 /* Footer XIV QR & Minimalist Styling */
 .footer {
-  background: #edece8 !important;
+  background: var(--color-background) !important;
   border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
