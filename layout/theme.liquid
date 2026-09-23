@@ -110,6 +110,34 @@
         font-style: normal;
         font-display: swap;
       }
+      @font-face {
+        font-family: 'Beatrice Deck Trial';
+        src: url("{{ 'Beatrice-Regular.ttf' | asset_url }}") format('truetype');
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Beatrice Deck Trial';
+        src: url("{{ 'Beatrice-Medium.ttf' | asset_url }}") format('truetype');
+        font-weight: 500;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Beatrice Deck Trial';
+        src: url("{{ 'Beatrice-Bold.ttf' | asset_url }}") format('truetype');
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Beatrice Deck Trial';
+        src: url("{{ 'Beatrice-Bold.ttf' | asset_url }}") format('truetype');
+        font-weight: 800;
+        font-style: normal;
+        font-display: swap;
+      }
 
       {{ settings.type_body_font | font_face: font_display: 'swap' }}
       {{ body_font_bold | font_face: font_display: 'swap' }}
@@ -178,7 +206,7 @@
         --font-body-weight: 400;
         --font-body-weight-bold: 600;
 
-        --font-heading-family: 'Beatrice', 'Beatrice Headline', Georgia, serif;
+        --font-heading-family: 'Beatrice Deck Trial', 'Beatrice', 'Beatrice Headline', Georgia, serif;
         --font-heading-style: normal;
         --font-heading-weight: 700;
 

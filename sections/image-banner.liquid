@@ -159,12 +159,81 @@
                   {{- block.settings.button_label_2 | escape -}}
                 </a>
               {%- endif -%}
+              {%- if section.settings.show_slider_arrows -%}
+                <div class="banner__slider-controls">
+                  <button type="button" class="banner__slider-arrow banner__slider-arrow--prev" aria-label="Previous Slide">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                  </button>
+                  <button type="button" class="banner__slider-arrow banner__slider-arrow--next" aria-label="Next Slide">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                  </button>
+                </div>
+              {%- endif -%}
             </div>
         {%- endcase -%}
       {%- endfor -%}
     </div>
+    {%- if section.settings.show_showcase_cards -%}
+      <div class="banner__showcase-cards">
+        <a href="{{ section.settings.showcase_link_1 | default: routes.all_products_collection_url }}" class="banner__showcase-card" aria-label="Showcase 1">
+          {%- if section.settings.showcase_image_1 != blank -%}
+            {{ section.settings.showcase_image_1 | image_url: width: 800 | image_tag: loading: 'eager', class: 'banner__showcase-img' }}
+          {%- else -%}
+            <img src="{{ 'Rectangle-12.png' | asset_url }}" alt="Showcase Look 1" class="banner__showcase-img" loading="eager" width="366" height="376">
+          {%- endif -%}
+        </a>
+        <a href="{{ section.settings.showcase_link_2 | default: routes.all_products_collection_url }}" class="banner__showcase-card" aria-label="Showcase 2">
+          {%- if section.settings.showcase_image_2 != blank -%}
+            {{ section.settings.showcase_image_2 | image_url: width: 800 | image_tag: loading: 'eager', class: 'banner__showcase-img' }}
+          {%- else -%}
+            <img src="{{ 'Rectangle-13.png' | asset_url }}" alt="Showcase Look 2" class="banner__showcase-img" loading="eager" width="366" height="376">
+          {%- endif -%}
+        </a>
+      </div>
+    {%- endif -%}
   </div>
 </div>
+
+<script>
+  /**
+   * Goal: Scroll the hero showcase cards horizontally when the user clicks slider arrow buttons.
+   * Method: Calculates scroll offset and smoothly scrolls the .banner__showcase-cards container.
+   * Inputs/Outputs: Accepts container (HTMLElement) and direction ('prev' | 'next'), returns void.
+   */
+  function scrollHeroShowcase(container, direction) {
+    if (!container) return;
+    const offset = direction === 'next' ? 390 : -390;
+    container.scrollBy({ left: offset, behavior: 'smooth' });
+  }
+
+  /**
+   * Goal: Attach event listeners to hero slider arrow buttons.
+   * Method: Queries .banner__slider-arrow buttons and registers click handlers delegating to scrollHeroShowcase.
+   * Inputs/Outputs: Accepts rootElement (HTMLElement), returns void.
+   */
+  function initHeroSlider(rootElement) {
+    if (!rootElement) return;
+    const prevBtn = rootElement.querySelector('.banner__slider-arrow--prev');
+    const nextBtn = rootElement.querySelector('.banner__slider-arrow--next');
+    const cardsContainer = rootElement.querySelector('.banner__showcase-cards');
+
+    if (prevBtn && cardsContainer) {
+      prevBtn.addEventListener('click', function() {
+        scrollHeroShowcase(cardsContainer, 'prev');
+      });
+    }
+    if (nextBtn && cardsContainer) {
+      nextBtn.addEventListener('click', function() {
+        scrollHeroShowcase(cardsContainer, 'next');
+      });
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var banner = document.getElementById('Banner-{{ section.id }}');
+    initHeroSlider(banner);
+  });
+</script>
 
 {% schema %}
 {
@@ -358,6 +427,42 @@
       "id": "show_text_below",
       "default": true,
       "label": "t:sections.image-banner.settings.show_text_below.label"
+    },
+    {
+      "type": "header",
+      "content": "Figma Showcase Cards & Controls"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_showcase_cards",
+      "default": true,
+      "label": "Show Figma showcase cards"
+    },
+    {
+      "type": "image_picker",
+      "id": "showcase_image_1",
+      "label": "Showcase image 1"
+    },
+    {
+      "type": "url",
+      "id": "showcase_link_1",
+      "label": "Showcase link 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "showcase_image_2",
+      "label": "Showcase image 2"
+    },
+    {
+      "type": "url",
+      "id": "showcase_link_2",
+      "label": "Showcase link 2"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_slider_arrows",
+      "default": true,
+      "label": "Show slider arrow buttons"
     }
   ],
   "blocks": [

@@ -3650,28 +3650,46 @@ h1, h2, h3, .h1, .h2, .h3, .banner__heading, .card__heading, .product__title {
 
 .brand-monogram-diamond {
   display: block;
-  width: 32px;
-  height: 32px;
+  width: 35.36px;
+  height: 35.36px;
   cursor: pointer;
+  transform: rotate(45deg);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .brand-monogram-diamond:hover {
-  transform: rotate(90deg);
+  transform: rotate(135deg);
 }
 
-/* Header Luxury Pill & Icon System */
+/* Header Navigation Links (Figma Group 3: Home, Collections, New) */
+.header__menu-item {
+  font-family: 'Beatrice Deck Trial', 'Beatrice', sans-serif !important;
+  font-style: normal;
+  font-weight: 500 !important;
+  font-size: 16px !important;
+  line-height: 24px !important;
+  letter-spacing: 2px !important;
+  color: #000000 !important;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.header__menu-item:hover {
+  opacity: 0.65;
+}
+
+/* Header Action Buttons (Figma Group 8, 7 & Rectangle 1) */
 .header__icons {
   display: flex;
   align-items: center;
-  gap: 1.2rem;
+  gap: 1.6rem;
 }
 
 .header__icon-circle {
-  width: 38px;
-  height: 38px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  background: #111111;
+  background: #000000;
   color: #ffffff;
   display: flex;
   align-items: center;
@@ -3680,35 +3698,44 @@ h1, h2, h3, .h1, .h2, .h3, .banner__heading, .card__heading, .product__title {
 }
 
 .header__icon-circle:hover {
-  background: #2b2b2b;
-  transform: scale(1.06);
+  background: #222222;
+  transform: scale(1.04);
 }
 
+/* Cart Capsule Pill (Figma Rectangle 1: width 76px, height 50px, border-radius 22px) */
 .header__icon--cart-pill {
   display: inline-flex;
   align-items: center;
-  gap: 0.8rem;
-  background: #111111;
+  justify-content: center;
+  gap: 0.6rem;
+  width: 76px;
+  height: 50px;
+  background: #000000;
   color: #ffffff;
-  border-radius: 28px;
-  padding: 0.4rem 0.6rem 0.4rem 1.4rem;
-  font-family: var(--font-body-family);
-  font-size: 1.3rem;
-  font-weight: 600;
+  border-radius: 22px;
+  padding: 0 1rem;
   text-decoration: none;
   transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .header__icon--cart-pill:hover {
-  background: #2b2b2b;
-  transform: scale(1.03);
+  background: #222222;
+  transform: scale(1.04);
+}
+
+.cart-pill-label {
+  font-family: 'Beatrice Deck Trial', 'Beatrice', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 2px;
+  color: #ffffff;
 }
 
 .cart-pill-icon-wrap {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  width: 20px;
+  height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3717,10 +3744,10 @@ h1, h2, h3, .h1, .h2, .h3, .banner__heading, .card__heading, .product__title {
 
 .cart-pill-count {
   position: absolute;
-  top: -6px;
-  right: -6px;
+  top: -8px;
+  right: -8px;
   background: #ffffff;
-  color: #111111;
+  color: #000000;
   font-size: 1rem;
   font-weight: 700;
   border-radius: 50%;
@@ -3732,38 +3759,41 @@ h1, h2, h3, .h1, .h2, .h3, .banner__heading, .card__heading, .product__title {
   padding: 0 2px;
 }
 
-/* Sub-navigation Row (MEN, WOMEN, KIDS & Subtle Search) */
+/* Sub-navigation Row (MEN, WOMEN, KIDS & Search) */
 .header-subnav-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.8rem 2.4rem 1.4rem;
+  padding: 1.2rem 2.4rem 1.6rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .header-subnav-categories {
   display: flex;
   align-items: center;
-  gap: 2.4rem;
+  gap: 2.8rem;
 }
 
 .subnav-link {
-  font-family: var(--font-body-family);
-  font-size: 1.25rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  color: #111111;
+  font-family: 'Beatrice Deck Trial', 'Beatrice', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 2px;
+  color: #000000;
   text-decoration: none;
   text-transform: uppercase;
   transition: opacity 0.2s ease;
 }
 
 .subnav-link:hover {
-  opacity: 0.55;
+  opacity: 0.6;
 }
 
+/* Figma Group 44: Search Input (width 367px, height 50px, background #D9D9D9, border-radius 2px) */
 .header-subnav-search {
-  max-width: 340px;
+  max-width: 367px;
   width: 100%;
 }
 
@@ -3776,29 +3806,40 @@ h1, h2, h3, .h1, .h2, .h3, .banner__heading, .card__heading, .product__title {
 
 .subnav-search-icon {
   position: absolute;
-  left: 1.2rem;
+  left: 1.4rem;
   pointer-events: none;
-  opacity: 0.5;
   display: flex;
   align-items: center;
+  color: rgba(0, 0, 0, 0.66);
 }
 
 .subnav-search-input {
-  width: 100%;
-  padding: 0.75rem 1.2rem 0.75rem 3.4rem;
-  background: rgba(0, 0, 0, 0.04);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  font-family: var(--font-body-family);
-  font-size: 1.3rem;
-  color: #111111;
-  border-radius: 0 !important;
+  width: 367px;
+  max-width: 100%;
+  height: 50px;
+  padding: 0 1.2rem 0 3.8rem;
+  background: #D9D9D9;
+  border: none;
+  border-radius: 2px !important;
+  font-family: 'Beatrice Deck Trial', 'Beatrice', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 2px;
+  color: rgba(0, 0, 0, 0.85);
   outline: none;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  transition: background-color 0.2s ease;
+}
+
+.subnav-search-input::placeholder {
+  color: rgba(0, 0, 0, 0.66);
+  font-family: 'Beatrice Deck Trial', 'Beatrice', sans-serif;
+  letter-spacing: 2px;
 }
 
 .subnav-search-input:focus {
-  background: #ffffff;
-  border-color: #111111;
+  background: #eaeaea;
 }
 
 /* Category Filter Chips */
