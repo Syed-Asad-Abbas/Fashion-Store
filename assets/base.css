@@ -4054,6 +4054,50 @@ h3,
 }
 
 /**
+ * Goal: Set exact Figma dimensions (305px width x 313px height) for the NEW THIS WEEK featured collection image containers.
+ * Method: Sets explicit width and height with aspect-ratio on the card__inner container, resets Dawn's
+ *         ratio::before pseudo-element padding so it doesn't inflate the height, and ensures images cover the frame cleanly.
+ *         Maintains proportional aspect-ratio on smaller mobile screens.
+ * Inputs/Outputs: No JS. Pure CSS styling scoped to .featured-collection-item.
+ */
+.featured-collection-item .card__inner {
+  width: 100%;
+  max-width: 305px;
+  aspect-ratio: 305 / 313;
+}
+
+.featured-collection-item .card__inner.ratio::before {
+  display: none;
+}
+
+.featured-collection-item .card__inner .card__media {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.featured-collection-item .card__inner .card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media screen and (min-width: 990px) {
+  .featured-collection-item.grid__item {
+    flex: 0 0 305px;
+    width: 305px;
+    max-width: 305px;
+  }
+
+  .featured-collection-item .card__inner {
+    width: 305px;
+    height: 313px;
+  }
+}
+
+/**
  * Goal: Create a staggered/zig-zag vertical layout for the "Our Approach" multicolumn section.
  * Method: Even-numbered grid items are pushed down with margin-top so the layout alternates
  *         high-low-high-low, matching the Figma design.
