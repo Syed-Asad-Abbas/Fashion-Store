@@ -21,15 +21,92 @@
         {{- collection.title | escape -}}
       </h1>
 
+      {%- liquid
+        assign is_best_sellers = false
+        if collection.sort_by == 'best-selling'
+          assign is_best_sellers = true
+        endif
+
+        assign is_shirts = false
+        if collection.handle == 'shirts' or current_tags contains 'shirts' or current_tags contains 'Shirts'
+          assign is_shirts = true
+        endif
+
+        assign is_t_shirts = false
+        if collection.handle == 't-shirts' or collection.handle == 'tshirts' or current_tags contains 't-shirts' or current_tags contains 'T-Shirts' or current_tags contains 'tshirts' or current_tags contains 'T-shirts'
+          assign is_t_shirts = true
+        endif
+
+        assign is_polo_shirts = false
+        if collection.handle == 'polo-shirts' or collection.handle == 'polos' or current_tags contains 'polo-shirts' or current_tags contains 'Polo Shirts' or current_tags contains 'polo'
+          assign is_polo_shirts = true
+        endif
+
+        assign is_jeans = false
+        if collection.handle == 'jeans' or current_tags contains 'jeans' or current_tags contains 'Jeans'
+          assign is_jeans = true
+        endif
+
+        assign is_shorts = false
+        if collection.handle == 'shorts' or current_tags contains 'shorts' or current_tags contains 'Shorts'
+          assign is_shorts = true
+        endif
+
+        assign is_jackets = false
+        if collection.handle == 'jackets' or current_tags contains 'jackets' or current_tags contains 'Jackets'
+          assign is_jackets = true
+        endif
+
+        assign is_new = false
+        unless is_best_sellers or is_shirts or is_t_shirts or is_polo_shirts or is_jeans or is_shorts or is_jackets
+          if collection.handle == 'all' or collection.handle == blank or collection.handle == 'frontpage'
+            assign is_new = true
+          endif
+        endunless
+
+        assign all_url = routes.collections_url | append: '/all'
+        assign best_sellers_url = routes.collections_url | append: '/all?sort_by=best-selling'
+
+        assign shirts_url = routes.collections_url | append: '/all/shirts'
+        if collections.shirts != blank
+          assign shirts_url = collections.shirts.url
+        endif
+
+        assign t_shirts_url = routes.collections_url | append: '/all/t-shirts'
+        if collections['t-shirts'] != blank
+          assign t_shirts_url = collections['t-shirts'].url
+        endif
+
+        assign polo_shirts_url = routes.collections_url | append: '/all/polo-shirts'
+        if collections['polo-shirts'] != blank
+          assign polo_shirts_url = collections['polo-shirts'].url
+        endif
+
+        assign jeans_url = routes.collections_url | append: '/all/jeans'
+        if collections.jeans != blank
+          assign jeans_url = collections.jeans.url
+        endif
+
+        assign shorts_url = routes.collections_url | append: '/all/shorts'
+        if collections.shorts != blank
+          assign shorts_url = collections.shorts.url
+        endif
+
+        assign jackets_url = routes.collections_url | append: '/all/jackets'
+        if collections.jackets != blank
+          assign jackets_url = collections.jackets.url
+        endif
+      -%}
+
       <div class="collection-filter-chips">
-        <a href="{{ collection.url }}" class="filter-chip active">NEW</a>
-        <a href="{{ collection.url }}?sort_by=best-selling" class="filter-chip">BEST SELLERS</a>
-        <a href="{{ routes.collections_url }}/shirts" class="filter-chip">SHIRTS</a>
-        <a href="{{ routes.collections_url }}/t-shirts" class="filter-chip">T-SHIRTS</a>
-        <a href="{{ routes.collections_url }}/polo-shirts" class="filter-chip">POLO SHIRTS</a>
-        <a href="{{ routes.collections_url }}/jeans" class="filter-chip">JEANS</a>
-        <a href="{{ routes.collections_url }}/shorts" class="filter-chip">SHORTS</a>
-        <a href="{{ routes.collections_url }}/jackets" class="filter-chip">JACKETS</a>
+        <a href="{{ all_url }}" class="filter-chip{% if is_new %} active{% endif %}"{% if is_new %} aria-current="page"{% endif %}>NEW</a>
+        <a href="{{ best_sellers_url }}" class="filter-chip{% if is_best_sellers %} active{% endif %}"{% if is_best_sellers %} aria-current="page"{% endif %}>BEST SELLERS</a>
+        <a href="{{ shirts_url }}" class="filter-chip{% if is_shirts %} active{% endif %}"{% if is_shirts %} aria-current="page"{% endif %}>SHIRTS</a>
+        <a href="{{ t_shirts_url }}" class="filter-chip{% if is_t_shirts %} active{% endif %}"{% if is_t_shirts %} aria-current="page"{% endif %}>T-SHIRTS</a>
+        <a href="{{ polo_shirts_url }}" class="filter-chip{% if is_polo_shirts %} active{% endif %}"{% if is_polo_shirts %} aria-current="page"{% endif %}>POLO SHIRTS</a>
+        <a href="{{ jeans_url }}" class="filter-chip{% if is_jeans %} active{% endif %}"{% if is_jeans %} aria-current="page"{% endif %}>JEANS</a>
+        <a href="{{ shorts_url }}" class="filter-chip{% if is_shorts %} active{% endif %}"{% if is_shorts %} aria-current="page"{% endif %}>SHORTS</a>
+        <a href="{{ jackets_url }}" class="filter-chip{% if is_jackets %} active{% endif %}"{% if is_jackets %} aria-current="page"{% endif %}>JACKETS</a>
       </div>
 
       {%- if section.settings.show_collection_description -%}

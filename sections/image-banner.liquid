@@ -81,9 +81,37 @@
 
       {%- comment -%} Vertical category links (MEN / WOMEN / KIDS) — from Figma {%- endcomment -%}
       <nav class="hero-categories" aria-label="Shop by category">
-        <a href="{{ routes.collections_url }}/all?filter.v.category=men" class="hero-category-link">MEN</a>
-        <a href="{{ routes.collections_url }}/all?filter.v.category=women" class="hero-category-link">WOMEN</a>
-        <a href="{{ routes.collections_url }}/all?filter.v.category=kids" class="hero-category-link">KIDS</a>
+        {%- assign men_url = routes.collections_url | append: '/all/men' -%}
+        {%- if collections.men != blank -%}
+          {%- assign men_url = collections.men.url -%}
+        {%- endif -%}
+        {%- assign women_url = routes.collections_url | append: '/all/women' -%}
+        {%- if collections.women != blank -%}
+          {%- assign women_url = collections.women.url -%}
+        {%- endif -%}
+        {%- assign kids_url = routes.collections_url | append: '/all/kids' -%}
+        {%- if collections.kids != blank -%}
+          {%- assign kids_url = collections.kids.url -%}
+        {%- endif -%}
+
+        {%- assign is_men_active = false -%}
+        {%- if collection.handle == 'men' or current_tags contains 'men' or current_tags contains 'Men' -%}
+          {%- assign is_men_active = true -%}
+        {%- endif -%}
+
+        {%- assign is_women_active = false -%}
+        {%- if collection.handle == 'women' or current_tags contains 'women' or current_tags contains 'Women' -%}
+          {%- assign is_women_active = true -%}
+        {%- endif -%}
+
+        {%- assign is_kids_active = false -%}
+        {%- if collection.handle == 'kids' or collection.handle == 'kid' or current_tags contains 'kids' or current_tags contains 'Kids' or current_tags contains 'kid' or current_tags contains 'Kid' -%}
+          {%- assign is_kids_active = true -%}
+        {%- endif -%}
+
+        <a href="{{ men_url }}" class="hero-category-link{% if is_men_active %} hero-category-link--active{% endif %}"{% if is_men_active %} aria-current="page"{% endif %}>MEN</a>
+        <a href="{{ women_url }}" class="hero-category-link{% if is_women_active %} hero-category-link--active{% endif %}"{% if is_women_active %} aria-current="page"{% endif %}>WOMEN</a>
+        <a href="{{ kids_url }}" class="hero-category-link{% if is_kids_active %} hero-category-link--active{% endif %}"{% if is_kids_active %} aria-current="page"{% endif %}>KIDS</a>
       </nav>
 
       {%- comment -%} Search bar — Figma: 367×50, bg #D9D9D9, border-radius 2px {%- endcomment -%}

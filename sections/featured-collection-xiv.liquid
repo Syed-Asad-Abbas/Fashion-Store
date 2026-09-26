@@ -94,20 +94,40 @@
     </div>
 
     {%- comment -%} Filter Bar: Categories + Filters/Sorts {%- endcomment -%}
+    {%- assign all_products_url = routes.collections_url | append: '/all' -%}
+    {%- assign target_collection = section.settings.collection -%}
+    {%- assign target_url = all_products_url -%}
+    {%- if target_collection != blank and target_collection.url != blank -%}
+      {%- assign target_url = target_collection.url -%}
+    {%- endif -%}
+
+    {%- assign men_url = routes.collections_url | append: '/all/men' -%}
+    {%- if collections.men != blank -%}
+      {%- assign men_url = collections.men.url -%}
+    {%- endif -%}
+    {%- assign women_url = routes.collections_url | append: '/all/women' -%}
+    {%- if collections.women != blank -%}
+      {%- assign women_url = collections.women.url -%}
+    {%- endif -%}
+    {%- assign kids_url = routes.collections_url | append: '/all/kids' -%}
+    {%- if collections.kids != blank -%}
+      {%- assign kids_url = collections.kids.url -%}
+    {%- endif -%}
+
     <div class="xiv-filter-bar page-width">
       <div class="xiv-filter-categories">
-        <button class="xiv-filter-chip xiv-filter-chip--active" data-filter="all">(ALL)</button>
-        <button class="xiv-filter-chip" data-filter="men">Men</button>
-        <button class="xiv-filter-chip" data-filter="women">Women</button>
-        <button class="xiv-filter-chip" data-filter="kid">KID</button>
+        <a href="{{ all_products_url }}" class="xiv-filter-chip xiv-filter-chip--active" data-filter="all">(ALL)</a>
+        <a href="{{ men_url }}" class="xiv-filter-chip" data-filter="men">Men</a>
+        <a href="{{ women_url }}" class="xiv-filter-chip" data-filter="women">Women</a>
+        <a href="{{ kids_url }}" class="xiv-filter-chip" data-filter="kid">KID</a>
       </div>
       <div class="xiv-filter-actions">
-        <button class="xiv-action-btn">Filters(+)</button>
+        <a href="{{ all_products_url }}" class="xiv-action-btn">Filters(+)</a>
         <div class="xiv-sort-wrapper">
-          <button class="xiv-action-btn">Sorts(-)</button>
-          <div class="xiv-sort-options">
-            <span>Less to more</span>
-            <span>More to Less</span>
+          <button type="button" class="xiv-action-btn xiv-sort-btn" id="xiv-sort-trigger-{{ section.id }}" aria-expanded="true" aria-controls="xiv-sort-options-{{ section.id }}">Sorts(-)</button>
+          <div class="xiv-sort-options" id="xiv-sort-options-{{ section.id }}">
+            <a href="{{ target_url }}?sort_by=price-ascending" class="xiv-sort-option">Less to more</a>
+            <a href="{{ target_url }}?sort_by=price-descending" class="xiv-sort-option">More to Less</a>
           </div>
         </div>
       </div>
@@ -170,6 +190,99 @@
     {%- endif -%}
   </div>
 </div>
+
+<script>
+/**
+ * Goal: Update the visual and accessibility state of the XIV sort dropdown.
+ * Method: Sets the aria-expanded attribute on the trigger button, toggles the collapsed CSS class on the options container, and synchronizes the button label.
+ * Inputs/Outputs:
+ *   - sortBtn (HTMLButtonElement): The sort toggle button element.
+ *   - sortOptions (HTMLElement): The dropdown container element holding sort links.
+ *   - isExpanded (boolean): True if dropdown should be displayed; false if collapsed.
+ *   - Returns: void.
+ */
+function setXivSortDropdownState(sortBtn, sortOptions, isExpanded) {
+  sortBtn.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+  sortBtn.textContent = isExpanded ? 'Sorts(-)' : 'Sorts(+)';
+  sortOptions.classList.toggle('xiv-sort-options--collapsed', !isExpanded);
+}
+
+/**
+ * Goal: Respond to click interactions on the sort dropdown toggle button.
+ * Method: Inverts the current aria-expanded state and applies the new state via setXivSortDropdownState.
+ * Inputs/Outputs:
+ *   - event (MouseEvent): The click event emitted by the trigger button.
+ *   - sortBtn (HTMLButtonElement): The sort button being clicked.
+ *   - sortOptions (HTMLElement): The corresponding options container.
+ *   - Returns: void.
+ */
+function handleXivSortToggleClick(event, sortBtn, sortOptions) {
+  event.stopPropagation();
+  const isCurrentlyExpanded = sortBtn.getAttribute('aria-expanded') === 'true';
+  setXivSortDropdownState(sortBtn, sortOptions, !isCurrentlyExpanded);
+}
+
+/**
+ * Goal: Close the XIV sort dropdown automatically when clicking outside of the component.
+ * Method: Validates whether the event target is outside the wrapper element; if so, ensures the dropdown is collapsed.
+ * Inputs/Outputs:
+ *   - event (MouseEvent): The click event emitted on the document.
+ *   - sortWrapper (HTMLElement): The container wrapping the sort button and menu.
+ *   - sortBtn (HTMLButtonElement): The sort toggle button.
+ *   - sortOptions (HTMLElement): The sort options container.
+ *   - Returns: void.
+ */
+function handleXivSortOutsideClick(event, sortWrapper, sortBtn, sortOptions) {
+  if (!sortWrapper.contains(event.target)) {
+    if (sortBtn.getAttribute('aria-expanded') === 'true') {
+      setXivSortDropdownState(sortBtn, sortOptions, false);
+    }
+  }
+}
+
+/**
+ * Goal: Bind event listeners for the XIV Sort control within a specific section instance.
+ * Method: Locates DOM elements by section-specific identifiers and attaches click and document-level listeners.
+ * Inputs/Outputs:
+ *   - sectionId (string): The unique section ID string provided by Shopify Liquid.
+ *   - Returns: void.
+ */
+function attachXivSortListeners(sectionId) {
+  const sortBtn = document.getElementById('xiv-sort-trigger-' + sectionId);
+  const sortOptions = document.getElementById('xiv-sort-options-' + sectionId);
+  if (!sortBtn || !sortOptions) return;
+
+  const sortWrapper = sortBtn.closest('.xiv-sort-wrapper');
+  if (!sortWrapper) return;
+
+  sortBtn.addEventListener('click', function(event) {
+    handleXivSortToggleClick(event, sortBtn, sortOptions);
+  });
+
+  document.addEventListener('click', function(event) {
+    handleXivSortOutsideClick(event, sortWrapper, sortBtn, sortOptions);
+  });
+}
+
+/**
+ * Goal: Ensure XIV sort component initializes reliably across initial page load and theme editor changes.
+ * Method: Checks document.readyState; if still loading attaches to DOMContentLoaded, otherwise executes immediately.
+ * Inputs/Outputs:
+ *   - sectionId (string): The unique section ID string.
+ *   - Returns: void.
+ */
+function initXivSortSection(sectionId) {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      attachXivSortListeners(sectionId);
+    });
+  } else {
+    attachXivSortListeners(sectionId);
+  }
+}
+
+initXivSortSection('{{ section.id }}');
+</script>
 
 {% schema %}
 {
