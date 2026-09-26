@@ -98,22 +98,33 @@
                     {{- block.settings.text -}}
                   </p>
                 {%- when 'title' -%}
-                  <div class="product__title" {{ block.shopify_attributes }}>
-                    <h1>{{ product.title | escape }}</h1>
-                    <a href="{{ product.url }}" class="product__title">
-                      <h2 class="h1">
-                        {{ product.title | escape }}
-                      </h2>
-                    </a>
+                  <div class="product__title-row" {{ block.shopify_attributes }}>
+                    <div class="product__title">
+                      <h1>{{ product.title | escape }}</h1>
+                    </div>
+                    <button
+                      type="button"
+                      class="product__wishlist-btn"
+                      id="ProductWishlist-{{ section.id }}"
+                      aria-label="Add to Wishlist"
+                      data-product-id="{{ product.id }}"
+                    >
+                      <svg class="product__wishlist-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                      </svg>
+                    </button>
                   </div>
                 {%- when 'price' -%}
-                  <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
-                    {%- render 'price',
-                      product: product,
-                      use_variant: true,
-                      show_badges: true,
-                      price_class: 'price--large'
-                    -%}
+                  <div class="product__price-tax-wrapper" {{ block.shopify_attributes }}>
+                    <div id="price-{{ section.id }}" class="product__price-container" role="status">
+                      {%- render 'price',
+                        product: product,
+                        use_variant: true,
+                        show_badges: false,
+                        price_class: 'price--large'
+                      -%}
+                    </div>
+                    <div class="product__mrp-tax-notice">MRP incl. of all taxes</div>
                   </div>
                   {%- if product.quantity_price_breaks_configured? -%}
                     <div class="volume-pricing-note" id="Volume-Note-{{ section.id }}">
@@ -752,6 +763,98 @@
     </div>
   </product-component>
 </product-info>
+
+<script>
+/**
+ * Goal: Retrieve saved wishlist status for a product from browser localStorage.
+ * Method: Parses JSON array stored under 'fashion_store_wishlist' and checks for product ID existence.
+ * Inputs/Outputs:
+ *   - productId (string): The unique product ID.
+ *   - Returns (boolean): True if product is in wishlist, false otherwise.
+ */
+function isProductInWishlist(productId) {
+  try {
+    const list = JSON.parse(localStorage.getItem('fashion_store_wishlist') || '[]');
+    return list.indexOf(productId) !== -1;
+  } catch (e) {
+    return false;
+  }
+}
+
+/**
+ * Goal: Update visual appearance of the wishlist button based on state.
+ * Method: Toggles the 'product__wishlist-btn--active' class and updates SVG fill attribute and aria-pressed.
+ * Inputs/Outputs:
+ *   - button (HTMLButtonElement): The wishlist button element.
+ *   - isActive (boolean): Current active state.
+ *   - Returns: void.
+ */
+function setWishlistButtonState(button, isActive) {
+  button.classList.toggle('product__wishlist-btn--active', isActive);
+  button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+  const icon = button.querySelector('.product__wishlist-icon');
+  if (icon) {
+    icon.setAttribute('fill', isActive ? '#000000' : 'none');
+  }
+}
+
+/**
+ * Goal: Toggle the product's presence in the saved wishlist and update UI state.
+ * Method: Adds or removes the productId from the localStorage array and updates the button visually.
+ * Inputs/Outputs:
+ *   - button (HTMLButtonElement): The wishlist trigger button.
+ *   - productId (string): The product ID to toggle.
+ *   - Returns: void.
+ */
+function handleWishlistToggle(button, productId) {
+  try {
+    let list = JSON.parse(localStorage.getItem('fashion_store_wishlist') || '[]');
+    const index = list.indexOf(productId);
+    let isNowActive = false;
+    if (index === -1) {
+      list.push(productId);
+      isNowActive = true;
+    } else {
+      list.splice(index, 1);
+      isNowActive = false;
+    }
+    localStorage.setItem('fashion_store_wishlist', JSON.stringify(list));
+    setWishlistButtonState(button, isNowActive);
+  } catch (e) {
+    console.error('Wishlist storage error:', e);
+  }
+}
+
+/**
+ * Goal: Initialize wishlist button interactivity and restore persisted state on page load.
+ * Method: Queries button by section ID, restores state from localStorage, and binds click event listener.
+ * Inputs/Outputs:
+ *   - sectionId (string): The Shopify section ID.
+ *   - Returns: void.
+ */
+function initProductWishlistButton(sectionId) {
+  const button = document.getElementById('ProductWishlist-' + sectionId);
+  if (!button) return;
+  const productId = button.getAttribute('data-product-id');
+  if (!productId) return;
+
+  const initialActive = isProductInWishlist(productId);
+  setWishlistButtonState(button, initialActive);
+
+  button.addEventListener('click', function(e) {
+    e.preventDefault();
+    handleWishlistToggle(button, productId);
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', function() {
+    initProductWishlistButton('{{ section.id }}');
+  });
+} else {
+  initProductWishlistButton('{{ section.id }}');
+}
+</script>
 
 {% schema %}
 {

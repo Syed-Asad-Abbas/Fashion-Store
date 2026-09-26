@@ -81,24 +81,84 @@
       additional_props: input_dataset
     %}
   {%- elsif picker_type == 'button' -%}
-    <input
-      type="radio"
-      id="{{ input_id }}"
-      name="{{ input_name | escape }}"
-      value="{{ escaped_value }}"
-      form="{{ product_form_id }}"
-      {% if value.selected %}
-        checked
-      {% endif %}
-      {% if option_disabled %}
-        class="disabled"
-      {% endif %}
-      {{ input_dataset }}
-    >
-    <label for="{{ input_id }}">
-      {{ value -}}
-      {{ label_unavailable }}
-    </label>
+    {%- assign option_name_downcase = option.name | downcase -%}
+    {%- assign is_color = false -%}
+    {%- if option_name_downcase == 'color' or option_name_downcase == 'colour' -%}
+      {%- assign is_color = true -%}
+    {%- endif -%}
+
+    {%- if is_color -%}
+      {%- assign color_key = value | downcase | strip -%}
+      {%- assign swatch_bg = color_key -%}
+      {%- case color_key -%}
+        {%- when 'caramel tan' -%}
+          {%- assign swatch_bg = '#C89D7C' -%}
+        {%- when 'off-white' -%}
+          {%- assign swatch_bg = '#F5F2EB' -%}
+        {%- when 'triple black' or 'black' -%}
+          {%- assign swatch_bg = '#111111' -%}
+        {%- when 'sand cream' -%}
+          {%- assign swatch_bg = '#E8DFD0' -%}
+        {%- when 'olive drab' or 'olive green' or 'olive' -%}
+          {%- assign swatch_bg = '#6B705C' -%}
+        {%- when 'ink navy' or 'navy' -%}
+          {%- assign swatch_bg = '#1B263B' -%}
+        {%- when 'heather grey' or 'grey' or 'gray' -%}
+          {%- assign swatch_bg = '#A8A8A8' -%}
+        {%- when 'light grey' or 'light gray' -%}
+          {%- assign swatch_bg = '#D9D9D9' -%}
+        {%- when 'mint' or 'mint green' or 'seafoam' -%}
+          {%- assign swatch_bg = '#A5D6A7' -%}
+        {%- when 'lavender' or 'periwinkle' -%}
+          {%- assign swatch_bg = '#B0B7D6' -%}
+        {%- when 'white' -%}
+          {%- assign swatch_bg = '#FFFFFF' -%}
+        {%- else -%}
+          {%- assign swatch_bg = color_key -%}
+      {%- endcase -%}
+      {%- if value.swatch.color -%}
+        {%- assign swatch_bg = value.swatch.color.rgb -%}
+      {%- endif -%}
+
+      <input
+        type="radio"
+        id="{{ input_id }}"
+        name="{{ input_name | escape }}"
+        value="{{ escaped_value }}"
+        form="{{ product_form_id }}"
+        {% if value.selected %}
+          checked
+        {% endif %}
+        {% if option_disabled %}
+          class="disabled"
+        {% endif %}
+        {{ input_dataset }}
+      >
+      <label for="{{ input_id }}" class="product-form__color-swatch-label" title="{{ value | escape }}" aria-label="{{ value | escape }}">
+        <span class="product-form__color-swatch-box" style="background-color: {{ swatch_bg }};{% if value.swatch.image %} background-image: url('{{ value.swatch.image | image_url: width: 80 }}'); background-size: cover;{% endif %}"></span>
+        <span class="visually-hidden">{{ value }}</span>
+        {{ label_unavailable }}
+      </label>
+    {%- else -%}
+      <input
+        type="radio"
+        id="{{ input_id }}"
+        name="{{ input_name | escape }}"
+        value="{{ escaped_value }}"
+        form="{{ product_form_id }}"
+        {% if value.selected %}
+          checked
+        {% endif %}
+        {% if option_disabled %}
+          class="disabled"
+        {% endif %}
+        {{ input_dataset }}
+      >
+      <label for="{{ input_id }}" class="product-form__size-pill-label">
+        {{ value -}}
+        {{ label_unavailable }}
+      </label>
+    {%- endif -%}
   {%- elsif picker_type == 'dropdown' or picker_type == 'swatch_dropdown' -%}
     <option
       id="{{ input_id }}"
