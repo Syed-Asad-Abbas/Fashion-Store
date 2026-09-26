@@ -154,21 +154,84 @@
 
     <!-- =================== RIGHT COLUMN =================== -->
     {%- if section.settings.show_showcase_cards -%}
+      {%- comment -%}
+        Goal: Render showcase product cards on desktop and a swipeable product carousel on mobile.
+        Method: On desktop (min-width: 990px), displays the existing lookbook showcase cards.
+                On mobile (max-width: 989px), renders a horizontal swipeable carousel of products
+                with exact 169x173px image dimensions, subtitle, title, and cost.
+        Inputs/Outputs: Uses section settings (showcase_collection, showcase_images), outputs HTML markup.
+      {%- endcomment -%}
       <div class="hero-right">
-        <a href="{{ section.settings.showcase_link_1 | default: routes.all_products_collection_url }}" class="hero-showcase-card" aria-label="Showcase 1">
-          {%- if section.settings.showcase_image_1 != blank -%}
-            {{ section.settings.showcase_image_1 | image_url: width: 800 | image_tag: loading: 'eager', class: 'hero-showcase-img' }}
+        <!-- Desktop Showcase Cards (preserved untouched) -->
+        <div class="hero-showcase-desktop-wrap small-hide medium-hide">
+          <a href="{{ section.settings.showcase_link_1 | default: routes.all_products_collection_url }}" class="hero-showcase-card" aria-label="Showcase 1">
+            {%- if section.settings.showcase_image_1 != blank -%}
+              {{ section.settings.showcase_image_1 | image_url: width: 800 | image_tag: loading: 'eager', class: 'hero-showcase-img' }}
+            {%- else -%}
+              <img src="{{ 'Rectangle-12.png' | asset_url }}" alt="Showcase Look 1" class="hero-showcase-img" loading="eager" width="366" height="376">
+            {%- endif -%}
+          </a>
+          <a href="{{ section.settings.showcase_link_2 | default: routes.all_products_collection_url }}" class="hero-showcase-card" aria-label="Showcase 2">
+            {%- if section.settings.showcase_image_2 != blank -%}
+              {{ section.settings.showcase_image_2 | image_url: width: 800 | image_tag: loading: 'eager', class: 'hero-showcase-img' }}
+            {%- else -%}
+              <img src="{{ 'Rectangle-13.png' | asset_url }}" alt="Showcase Look 2" class="hero-showcase-img" loading="eager" width="366" height="376">
+            {%- endif -%}
+          </a>
+        </div>
+
+        <!-- Mobile Swipeable Product Carousel -->
+        <div class="hero-showcase-mobile-carousel large-up-hide">
+          {%- assign showcase_products = section.settings.showcase_collection.products | default: collections['all'].products -%}
+          {%- if showcase_products.size > 0 -%}
+            {%- for product in showcase_products limit: 10 -%}
+              <div class="hero-carousel-item">
+                <a href="{{ product.url }}" class="hero-carousel-img-wrap" aria-label="{{ product.title | escape }}">
+                  {%- if product.featured_image != blank -%}
+                    {{ product.featured_image | image_url: width: 400 | image_tag: loading: 'lazy', class: 'hero-carousel-img', alt: product.title }}
+                  {%- else -%}
+                    <img src="{{ 'Rectangle-12.png' | asset_url }}" alt="{{ product.title | escape }}" class="hero-carousel-img" width="169" height="173" loading="lazy">
+                  {%- endif -%}
+                </a>
+                <div class="hero-carousel-info">
+                  <div class="hero-carousel-subtitle">
+                    {{ product.type | default: product.vendor | default: 'Cotton T Shirt' }}
+                  </div>
+                  <div class="hero-carousel-meta">
+                    <a href="{{ product.url }}" class="hero-carousel-title">{{ product.title }}</a>
+                    <span class="hero-carousel-price">{{ product.price | money }}</span>
+                  </div>
+                </div>
+              </div>
+            {%- endfor -%}
           {%- else -%}
-            <img src="{{ 'Rectangle-12.png' | asset_url }}" alt="Showcase Look 1" class="hero-showcase-img" loading="eager" width="366" height="376">
+            <!-- Fallback Mock Items Matching Figma -->
+            <div class="hero-carousel-item">
+              <a href="{{ routes.all_products_collection_url }}" class="hero-carousel-img-wrap">
+                <img src="{{ 'Rectangle-12.png' | asset_url }}" alt="Cotton T Shirt" class="hero-carousel-img" width="169" height="173">
+              </a>
+              <div class="hero-carousel-info">
+                <div class="hero-carousel-subtitle">Cotton T Shirt</div>
+                <div class="hero-carousel-meta">
+                  <span class="hero-carousel-title">Full Sleeve Zipper</span>
+                  <span class="hero-carousel-price">$ 199</span>
+                </div>
+              </div>
+            </div>
+            <div class="hero-carousel-item">
+              <a href="{{ routes.all_products_collection_url }}" class="hero-carousel-img-wrap">
+                <img src="{{ 'Rectangle-13.png' | asset_url }}" alt="Cotton T Shirt" class="hero-carousel-img" width="169" height="173">
+              </a>
+              <div class="hero-carousel-info">
+                <div class="hero-carousel-subtitle">Cotton T Shirt</div>
+                <div class="hero-carousel-meta">
+                  <span class="hero-carousel-title">Full Sleeve Zipper</span>
+                  <span class="hero-carousel-price">$ 199</span>
+                </div>
+              </div>
+            </div>
           {%- endif -%}
-        </a>
-        <a href="{{ section.settings.showcase_link_2 | default: routes.all_products_collection_url }}" class="hero-showcase-card" aria-label="Showcase 2">
-          {%- if section.settings.showcase_image_2 != blank -%}
-            {{ section.settings.showcase_image_2 | image_url: width: 800 | image_tag: loading: 'eager', class: 'hero-showcase-img' }}
-          {%- else -%}
-            <img src="{{ 'Rectangle-13.png' | asset_url }}" alt="Showcase Look 2" class="hero-showcase-img" loading="eager" width="366" height="376">
-          {%- endif -%}
-        </a>
+        </div>
       </div>
     {%- endif -%}
   </div>
@@ -417,6 +480,11 @@
       "id": "show_showcase_cards",
       "default": true,
       "label": "Show Figma showcase cards"
+    },
+    {
+      "type": "collection",
+      "id": "showcase_collection",
+      "label": "Showcase products collection"
     },
     {
       "type": "image_picker",

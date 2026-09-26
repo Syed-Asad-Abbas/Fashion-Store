@@ -36,6 +36,12 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+
+  @media screen and (max-width: 989px) {
+    #collection-{{ section.id }} {
+      margin: 0 2rem !important;
+    }
+  }
 {%- endstyle -%}
 
 {%- liquid

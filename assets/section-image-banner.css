@@ -265,6 +265,12 @@
   padding: 0.5rem 0;
 }
 
+.hero-showcase-desktop-wrap {
+  display: flex;
+  align-items: flex-start;
+  gap: 5.4rem;
+}
+
 .hero-right::-webkit-scrollbar {
   display: none;
 }
@@ -308,44 +314,218 @@
 }
 
 /* ---------- RESPONSIVE — Mobile / Tablet ---------- */
+/**
+ * Goal: Mobile hero layout matching Figma landing page mobile preview (440px / responsive mobile).
+ * Method: Sets display: contents on .hero-left so child elements participate directly in flex ordering:
+ *         1. Categories (order: 1) with top padding/margin
+ *         2. Search form (order: 2) with right-aligned placeholder text
+ *         3. Heading group (order: 3) with large 52px stacked Beatrice typography
+ *         4. Showcase product cards (order: 4) positioned above CTA
+ *         5. Go To Shop button (order: 5) positioned below cards
+ *         All elements strictly align to the left 20px vertical line originating from the hamburger icon.
+ * Inputs/Outputs: No JS. Pure CSS responsive media query scoped to (max-width: 989px).
+ */
 @media screen and (max-width: 989px) {
   .hero-container {
-    flex-direction: column;
-    padding: 2rem 1.5rem 3rem;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 1.5rem 2rem 3rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+    gap: 0 !important;
+  }
+
+  .hero-left {
+    display: contents !important;
+  }
+
+  /* 1. Category Links — aligned to left edge, with top spacing */
+  .hero-categories {
+    order: 1 !important;
+    margin: 1.8rem 0 2rem 0 !important;
+    padding-top: 5px !important;
+    gap: 0.2rem !important;
+  }
+
+  .hero-category-link {
+    letter-spacing: 2px !important;
+  }
+
+  /* 2. Search Bar — full width, icon on left, placeholder on right */
+  .hero-search-form {
+    order: 2 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 50px !important;
+    margin: 0 0 3.5rem 0 !important;
+    padding: 0 1.6rem !important;
+    box-sizing: border-box !important;
+  }
+
+  .hero-search-icon {
+    margin-right: 1rem !important;
+    flex-shrink: 0 !important;
+  }
+
+  .hero-search-input {
+    text-align: right !important;
+    padding-right: 0.5rem !important;
+  }
+
+  /* 3. Text Group — large stacked Beatrice heading & subtitle */
+  .hero-text-group {
+    order: 3 !important;
+    margin: 3.5rem 0 1.5rem 0 !important;
   }
 
   .hero-heading {
-    font-size: 36px !important;
-    line-height: 34px !important;
+    font-family: 'Beatrice Deck Trial', 'Beatrice', Georgia, serif !important;
+    font-style: normal !important;
+    font-weight: 800 !important;
+    font-size: 52px !important;
+    line-height: 0.92 !important;
+    letter-spacing: 2px !important;
+    text-transform: uppercase !important;
+    color: #000000 !important;
+    margin: 0 0 1.6rem 0 !important;
+    max-width: 360px !important;
+    word-break: break-word !important;
   }
 
-  .hero-search-form {
-    max-width: 100%;
+  .hero-subtitle,
+  .hero-subtitle p {
+    font-family: 'Beatrice Deck Trial', 'Beatrice', sans-serif !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    font-size: 18px !important;
+    line-height: 1.35 !important;
+    letter-spacing: 2px !important;
+    color: #000000 !important;
+    max-width: 120px !important;
+    margin: 0 !important;
   }
 
+  /* 4. Showcase Product Carousel (Mobile) — 169x173px image containers, swipeable, 5.5rem vertical margins */
   .hero-right {
-    width: 100%;
+    order: 4 !important;
+    width: calc(100% + 2rem) !important;
+    max-width: calc(100% + 2rem) !important;
+    margin: 5.5rem 0 5.5rem 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    display: block !important;
+    overflow: visible !important;
   }
 
-  .hero-showcase-card {
-    width: 280px;
-    height: 290px;
+  .hero-showcase-mobile-carousel {
+    display: flex !important;
+    gap: 1.4rem !important;
+    overflow-x: auto !important;
+    scroll-behavior: smooth !important;
+    -webkit-overflow-scrolling: touch !important;
+    scroll-snap-type: x mandatory !important;
+    scrollbar-width: none !important;
+    padding: 0 2rem 0.5rem 0 !important;
+  }
+
+  .hero-showcase-mobile-carousel::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .hero-carousel-item {
+    flex: 0 0 169px !important;
+    width: 169px !important;
+    scroll-snap-align: start !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .hero-carousel-img-wrap {
+    width: 169px !important;
+    height: 173px !important;
+    border: 1px solid #D7D7D7 !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    background: #FDFDFD !important;
+    display: block !important;
+    text-decoration: none !important;
+  }
+
+  .hero-carousel-img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+
+  .hero-carousel-info {
+    padding: 0.8rem 0 0 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.2rem !important;
+  }
+
+  .hero-carousel-subtitle {
+    font-family: var(--font-body-family, sans-serif) !important;
+    font-size: 1.15rem !important;
+    font-weight: 400 !important;
+    color: rgba(0, 0, 0, 0.55) !important;
+    margin: 0 !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .hero-carousel-meta {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: baseline !important;
+    gap: 0.6rem !important;
+  }
+
+  .hero-carousel-title {
+    font-family: 'Beatrice Deck Trial', 'Beatrice', sans-serif !important;
+    font-size: 1.35rem !important;
+    font-weight: 700 !important;
+    color: #000000 !important;
+    text-decoration: none !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    flex: 1 !important;
+  }
+
+  .hero-carousel-price {
+    font-family: 'Beatrice Deck Trial', 'Beatrice', sans-serif !important;
+    font-size: 1.35rem !important;
+    font-weight: 700 !important;
+    color: #000000 !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* 5. CTA Row — Go To Shop positioned below cards */
+  .hero-cta-row {
+    order: 5 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 1.5rem 0 0 0 !important;
+    gap: 0 !important;
+    box-sizing: border-box !important;
   }
 
   .hero-cta-button {
-    width: 100%;
-    max-width: 265px;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .hero-heading {
-    font-size: 28px !important;
-    line-height: 28px !important;
+    width: 180px !important;
+    max-width: 100% !important;
+    height: 40px !important;
+    Padding: 0 1rem;
   }
 
-  .hero-showcase-card {
-    width: 240px;
-    height: 250px;
+  .hero-slider-controls {
+    display: none !important;
   }
 }
